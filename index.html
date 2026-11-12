@@ -1,0 +1,1204 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Renaissance &amp; Reformation Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout (adapted from the Psych Study Kit): a study bench — one column, sticky deck filter, three tools (guide, flashcards, quiz) sharing one mastery record */
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --surface-2:#f8f9fb; --ink:#15202b; --muted:#566373; --line:#d8dee6;
+  --accent:#2a55c8; --accent-ink:#ffffff; --accent-soft:#e2e9fb;
+  --good:#1d7f55; --good-soft:#dcf1e7; --bad:#b93a26; --bad-soft:#f9e1dc; --warn-soft:#fbf1cf; --warn-ink:#6b5208;
+  --d-ren:#b45309; --d-art:#be185d; --d-roots:#7c3aed; --d-luther:#1d4ed8; --d-empire:#b91c1c; --d-calvin:#0f766e; --d-england:#4d7c0f; --d-society:#0e7490;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141b; --surface:#161f29; --surface-2:#1b2633; --ink:#e7ecf1; --muted:#97a4b2; --line:#2a3745;
+  --accent:#86a6ff; --accent-ink:#0e141b; --accent-soft:#1c2a47;
+  --good:#52c98f; --good-soft:#143326; --bad:#ff8d76; --bad-soft:#3a1d18; --warn-soft:#3a3115; --warn-ink:#f1d675;
+  --d-ren:#fbbf24; --d-art:#f472b6; --d-roots:#a78bfa; --d-luther:#60a5fa; --d-empire:#f87171; --d-calvin:#2dd4bf; --d-england:#a3e635; --d-society:#22d3ee;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141b; --surface:#161f29; --surface-2:#1b2633; --ink:#e7ecf1; --muted:#97a4b2; --line:#2a3745;
+  --accent:#86a6ff; --accent-ink:#0e141b; --accent-soft:#1c2a47;
+  --good:#52c98f; --good-soft:#143326; --bad:#ff8d76; --bad-soft:#3a1d18; --warn-soft:#3a3115; --warn-ink:#f1d675;
+  --d-ren:#fbbf24; --d-art:#f472b6; --d-roots:#a78bfa; --d-luther:#60a5fa; --d-empire:#f87171; --d-calvin:#2dd4bf; --d-england:#a3e635; --d-society:#22d3ee;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.55}
+.wrap{max-width:920px;margin:0 auto;padding-inline:16px;padding-block:24px 64px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(1.7rem,4.5vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.45rem;font-weight:700}
+h3{font-size:1.02rem;font-weight:700}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header.top{display:grid;gap:14px;margin-bottom:18px}
+.meter{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.bar{flex:1 1 220px;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--good);border-radius:99px;transition:width .3s}
+.meter b{font-variant-numeric:tabular-nums}
+
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:10px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.sticky{grid-template-columns:minmax(0,1fr)}
+.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:none}
+@media (max-width:560px){.tabs button{padding:8px 10px;font-size:.92rem}}
+.tabs button{border:0;background:none;padding:8px 16px;border-radius:999px;font-weight:700}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);padding:5px 11px;border-radius:999px;font-size:.88rem}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+#chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px}
+#chips .chip{flex:none}
+.unitpick{margin-bottom:14px;padding:12px 16px;display:grid;gap:8px}
+.unitpick .seg small{font-family:var(--mono);font-size:.7rem;opacity:.8}
+.chip.unit{font-weight:700;border-style:dashed}
+.unit-head{font-family:var(--display);font-size:1.7rem;font-weight:800;margin:6px 0 18px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.chip small{font-family:var(--mono);font-size:.7rem;opacity:.8;font-variant-numeric:tabular-nums}
+
+/* Guide */
+.deck{margin-bottom:40px}
+.deck-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.deck-head .dot{width:12px;height:12px;align-self:center}
+.deck-sub{color:var(--muted);margin:0 0 16px;max-width:65ch}
+.chain{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
+.chain ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain li{display:flex;align-items:center;gap:6px}
+.chain li span{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:3px 9px;font-size:.9rem}
+.chain li+li::before{content:"→";color:var(--muted)}
+.tree{font-family:var(--mono);font-size:.82rem;line-height:1.7;white-space:pre;overflow-x:auto;margin:8px 0 0}
+.sec{margin:22px 0 8px}
+.rows{display:grid;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:minmax(120px,190px) 1fr auto;gap:6px 16px;padding:11px 0;border-bottom:1px solid var(--line);align-items:start}
+.row .t{font-weight:700}
+.row .x{min-width:0}
+.hook{display:block;margin-top:4px;font-size:.88rem;color:var(--accent)}
+.know{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 9px;font-size:.78rem;white-space:nowrap}
+.know[aria-pressed="true"]{background:var(--good-soft);border-color:var(--good);color:var(--good);font-weight:700}
+@media (max-width:560px){.row{grid-template-columns:1fr auto}.row .x{grid-column:1 / -1;grid-row:2}}
+.watch{background:var(--warn-soft);color:var(--warn-ink);border-radius:var(--r);padding:12px 14px;margin-top:16px;font-size:.93rem}
+.watch b{display:block;margin-bottom:2px}
+.compare{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px}
+.compare th,.compare td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.compare th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-top:12px}
+
+/* Flashcards */
+.fc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.toggle{display:flex;gap:6px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:700}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.good{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.btn.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.btn.small{padding:6px 10px;font-size:.85rem;font-weight:400}
+.btn[aria-pressed="true"]{border-color:var(--ink)}
+.card{width:100%;min-height:260px;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:28px 24px;display:grid;place-items:center;text-align:center;box-shadow:0 1px 0 var(--line),0 12px 30px -18px rgba(0,0,0,.35);position:relative}
+.card .face{max-width:58ch}
+.card .big{font-family:var(--display);font-size:clamp(1.6rem,5vw,2.3rem);font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.card .def{font-size:1.08rem}
+.card .corner{position:absolute;top:14px;left:16px;display:flex;gap:7px;align-items:center}
+.card .flipnote{position:absolute;bottom:12px;left:0;right:0;font-size:.8rem;color:var(--muted)}
+.fc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.fc-actions .btn{padding:13px}
+.kbd{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:10px;text-align:center}
+.done{text-align:center;padding:40px 16px;background:var(--surface);border:1px solid var(--line);border-radius:18px}
+
+/* Quiz */
+.qbox{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.qprompt{font-size:1.15rem;font-weight:700;margin:0 0 16px;max-width:65ch}
+.qprompt .ask{display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:6px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.opt .k{font-family:var(--mono);font-size:.78rem;border:1px solid var(--line);border-radius:6px;padding:1px 7px;flex:none;margin-top:2px}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.sel .k{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.opt:disabled{cursor:default}
+.explain{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.explain b.ok{color:var(--good)} .explain b.no{color:var(--bad)}
+.qnav{display:flex;justify-content:flex-end;margin-top:14px}
+.setup{display:grid;gap:16px}
+.setup p{margin:0;color:var(--muted);max-width:65ch}
+.score{font-family:var(--display);font-size:3rem;font-weight:800;font-variant-numeric:tabular-nums}
+.missed{display:grid;gap:8px;margin-top:14px;text-align:left}
+.missed div{border-left:3px solid var(--bad);padding:6px 12px;background:var(--surface-2);border-radius:0 8px 8px 0;font-size:.93rem}
+.empty{color:var(--muted);padding:20px 0}
+
+/* Settings */
+.set-group{display:grid;gap:18px}
+.set-group+.set-group{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.set-row{display:grid;gap:7px}
+.set-row p{margin:0;color:var(--muted);font-size:.9rem;max-width:65ch}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg .btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.timer{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad);font-weight:700}
+.qcount{width:5.5em;font:inherit;color:inherit;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="label">World History · Chapter 10.3 &amp; 10.5 Test</div>
+      <h1>Renaissance &amp; Reformation Study Kit</h1>
+    </div>
+    <div class="meter">
+      <div class="bar" aria-hidden="true"><i id="mbar" style="width:0%"></i></div>
+      <span><b id="mcount">0</b> of <b id="mtotal">0</b> terms marked “got it”</span>
+      <button class="btn small" id="reset">Reset progress</button>
+    </div>
+  </header>
+
+  <div class="sticky">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="learn" aria-selected="true">Learn</button>
+      <button role="tab" data-tab="guide" aria-selected="false">Study guide</button>
+      <button role="tab" data-tab="cards" aria-selected="false">Flashcards</button>
+      <button role="tab" data-tab="quiz" aria-selected="false">Quiz</button>
+      <button role="tab" data-tab="settings" aria-selected="false" aria-label="Settings">⚙︎ Settings</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <main id="view"></main>
+</div>
+
+<script>
+const DECKS = [
+  {id:'ren', name:'The Renaissance & Humanism', sub:"What the Renaissance was, why it started in Italy, Petrarch, the Greek and Roman classics, humanism, and a liberal arts education. (No class notes for 10.3: this is standard textbook coverage of every 10.3 item on your study guide.)"},
+  {id:'art', name:'Renaissance Art & the Printing Press', sub:"The big Renaissance artists, realism, naturalism, linear perspective, and Gutenberg's printing press. (Standard textbook coverage of the 10.3 study guide items.)"},
+  {id:'roots', name:'Roots of the Reformation', sub:"Wycliffe and Hus, Christian humanism and Erasmus, corruption in the Church, indulgences, relics, and the Modern Devotion."},
+  {id:'luther', name:'Martin Luther & the Break', sub:"Luther's beliefs, the Ninety-five Theses, excommunication, the Diet of Worms, Frederick III, Lutheranism, the printing press, and the Peasants' War."},
+  {id:'empire', name:'Charles V & the Peace of Augsburg', sub:"Why Charles V couldn't stop Lutheranism, and what the Peace of Augsburg (1555) decided."},
+  {id:'calvin', name:'Zwingli, Calvin & the Anabaptists', sub:"Zwingli in Zürich, John Calvin, predestination and “the elect,” Geneva, and the radical Anabaptists."},
+  {id:'england', name:'Reformation in England', sub:"Henry VIII and the annulment, the Act of Supremacy, and how Edward VI, Mary I, and Elizabeth I changed England's religion."},
+  {id:'society', name:'Society & the Catholic Reformation', sub:"Education, marriage, women, the Protestant work ethic, anti-Semitism, and how the Catholic Church fought back (Jesuits, Teresa of Ávila, papal reform, the Council of Trent)."}
+];
+const UNITS = [
+  {id:'u3', name:'10.3 Renaissance', decks:['ren','art']},
+  {id:'u5', name:'10.5 Reformation', decks:['roots','luther','empire','calvin','england','society']}
+];
+UNITS.forEach(u=>u.decks.forEach(id=>{DECKS.find(d=>d.id===id).unit=u.id}));
+const unitById = Object.fromEntries(UNITS.map(u=>[u.id,u]));
+const DECK_VIEW = UNITS.flatMap(u=>u.decks.map(id=>DECKS.find(d=>d.id===id)).sort((a,b)=>!!a.opt-!!b.opt));
+
+// [deck, section, term, definition, hook?]  Append new cards at the end of a deck's block only if you don't mind saved progress shifting.
+const RAW = [
+// ---------- 10.3 The Renaissance ----------
+["ren","What the Renaissance was","The Renaissance","A period of European history from about 1350 to 1550 when people revived interest in the art and learning of ancient Greece and Rome. It began in the Italian city-states and later spread to northern Europe.","Renaissance is French for “rebirth”: the rebirth of classical culture."],
+["ren","What the Renaissance was","Why it began in Italy","Italy had wealthy, independent city-states (like Florence, Venice, and Milan) grown rich from trade, and it was surrounded by the ruins and writings of ancient Rome."],
+["ren","What the Renaissance was","Florence and the Medici","Florence was a leading Renaissance city-state. The wealthy Medici banking family ruled it and spent their money as patrons of artists and scholars."],
+["ren","What the Renaissance was","Patron","A wealthy person or family who pays artists and scholars to create works. Renaissance patrons included merchant families like the Medici and the popes."],
+["ren","What the Renaissance was","Secularism","Interest in worldly, everyday life and not only in religion and the afterlife. A big shift from the Middle Ages, though Renaissance people stayed Christian."],
+["ren","What the Renaissance was","Individualism","The Renaissance belief in the worth and talent of each person and the importance of individual achievement and fame."],
+["ren","What the Renaissance was","Renaissance man (universal man)","A person who is skilled in many fields: art, science, writing, and more. Leonardo da Vinci is the classic example.","“Well-rounded”: good at everything."],
+["ren","Humanism","Greek and Roman “classics”","The writings, art, and ideas of ancient Greece and Rome (writers like Cicero, Virgil, Plato, and Aristotle). Renaissance scholars hunted down old manuscripts of them and studied them as models.","Classics = the ancient “greats.”"],
+["ren","Humanism","Humanism","The intellectual movement at the heart of the Renaissance. Humanists studied the Greek and Roman classics (grammar, rhetoric, poetry, history, and moral philosophy) and focused on human potential and achievement.","Humanism = focus on humans and what they can do."],
+["ren","Humanism","Petrarch","Italian poet and scholar (1304–1374) often called the father of Italian Renaissance humanism. He searched for forgotten Latin manuscripts, admired classical writers like Cicero, and wrote sonnets.","Petrarch = the first humanist: he started the classics hunt."],
+["ren","Humanism","Christian humanism (Northern humanism)","Humanism as it spread north of the Alps. It used humanist study of the Bible and early Christian writers to reform the Church and make people more devout. Its leader was Erasmus (more in 10.5)."],
+["ren","Humanism","Liberal arts","The humanist education based on the classics: grammar, rhetoric, poetry, history, moral philosophy, plus math and music. Its goal was a well-rounded, virtuous citizen who could take part in public life.","Liberal arts = the education of a “free” (liberal) citizen."],
+["ren","Humanism","Vernacular","The everyday language of a region (Italian, English, German, French) instead of Latin. Writing and printing in the vernacular let ordinary people read books, and later the Bible.","Vernacular = the language people actually speak."],
+
+["art","Renaissance art","Realism","An art style that shows people and things as they really look: real faces, real emotions, correct proportions, and believable bodies. A big change from flat, symbolic medieval art."],
+["art","Renaissance art","Naturalism","Portraying the human body and the natural world as they appear in nature, based on careful observation. Renaissance artists studied anatomy and nature closely to get it right.","Naturalism = copy nature."],
+["art","Renaissance art","Linear perspective","A technique that makes a flat painting look three-dimensional. Lines (called orthogonals) meet at a vanishing point on the horizon, so objects get smaller as they go back.","All lines run to one vanishing point."],
+["art","Renaissance art","Fresco","A painting done on wet plaster on a wall or ceiling, so the paint becomes part of the wall. The Sistine Chapel ceiling and The Last Supper are famous Renaissance wall paintings."],
+["art","Renaissance art","Renaissance artists' goals","Imitate nature and show people realistically, using perspective, anatomy, light and shadow, and classical (Greek and Roman) styles. Many worked for wealthy patrons and the Church."],
+["art","Renaissance artists","Leonardo da Vinci","Italian painter, scientist, and inventor; the ideal “Renaissance man.” Painted the Mona Lisa and The Last Supper and filled notebooks with studies of anatomy and machines.","Leonardo = Mona Lisa + Last Supper + inventions."],
+["art","Renaissance artists","Michelangelo","Italian sculptor, painter, and architect. Carved the statue David and painted the ceiling of the Sistine Chapel in Rome. Known for powerful, muscular, idealized human figures."],
+["art","Renaissance artists","Raphael","Italian painter known for calm, balanced paintings of the Madonna and for The School of Athens, which shows ancient Greek philosophers like Plato and Aristotle."],
+["art","Renaissance artists","Brunelleschi","Florentine architect who designed the huge dome of Florence's cathedral and worked out the rules of linear perspective."],
+["art","Renaissance artists","Donatello","Florentine sculptor who made the first free-standing bronze nude since ancient times: his statue of David."],
+["art","Renaissance artists","Masaccio","Early Florentine painter whose frescoes were among the first to use linear perspective and realistic, solid-looking figures."],
+["art","Renaissance artists","Northern Renaissance artists","Artists like Jan van Eyck and Albrecht Dürer in Flanders and Germany. They painted in oil with extremely fine, realistic detail of everyday objects and people."],
+["art","The printing press","Printing press","A machine that used movable metal type to print many copies of a page quickly. Johannes Gutenberg built it in Mainz, Germany, around 1450.","Gutenberg = Germany = 1450."],
+["art","The printing press","Johannes Gutenberg","German inventor of the printing press with movable metal type (around 1450)."],
+["art","The printing press","Gutenberg Bible","The first major book printed with movable type, around 1455."],
+["art","The printing press","Effects of the printing press","Books became cheaper and more common, more people learned to read, ideas (humanist and religious) spread fast, and texts were standardized. By 1500 there were nearly 40,000 titles in print, more than half of them religious.","Cheaper books → more readers → ideas spread."],
+
+// ---------- 10.5 The Protestant Reformation ----------
+["roots","Overview","Protestant Reformation","The religious reform movement of the 1500s that split Western Christianity. It was started by the German monk and professor Martin Luther in 1517 and created new Protestant churches separate from the Catholic Church.","Protest + reform = Protestant Reformation."],
+["roots","Overview","Intellectual changes of the 1400s","Humanism, Christian humanism, and the printing press laid the groundwork for the Reformation by getting people to read the Bible and question the Church."],
+["roots","Wycliffe and Hus","John Wycliffe","English reformer in the late 1300s who criticized the Catholic Church's power and wealth. He saw the Bible as absolute truth (not priests and popes), wanted it translated into English, and believed in predestination and an “invisible church” of the saved.","Wycliffe = English Bible."],
+["roots","Wycliffe and Hus","Jan Hus (John Hus)","Czech reformer influenced by Wycliffe. He led reformers who wanted to end clerical corruption and too much papal power. He was condemned as a heretic and executed in 1415, which set off a Czech uprising in Bohemia that lasted until 1436.","Hus = burned 1415 → Bohemia revolts."],
+["roots","Wycliffe and Hus","Heretic","A person whose beliefs go against the official teachings of the Church. Heretics could be excommunicated or executed."],
+["roots","Christian humanism","Desiderius Erasmus","Leader of Christian humanism. He wanted Christianity to be a guide for daily life, preferred simple early Christianity, and valued inward religious feeling over rituals like pilgrimages, relics, and fasting. He wanted to reform the Church from within, not leave it.","“Erasmus laid the egg that Luther hatched.”"],
+["roots","Christian humanism","In Praise of Folly (1509)","Erasmus's book that used satire to mock the moral and religious state of society and the abuses of the Catholic Church."],
+["roots","Christian humanism","“Erasmus laid the egg that Luther hatched”","A saying that means Erasmus's criticism of the Church paved the way for Luther's Reformation, even though Erasmus himself never meant to break from the Church."],
+["roots","The need for reform","Corruption in the Catholic Church","Renaissance popes cared more about politics, wars, and wealth than spiritual needs. Clergy used Church offices for personal gain and failed to guide parishioners, so ordinary people were left without the spiritual help they wanted."],
+["roots","The need for reform","Clergy","Church officials such as priests, bishops, and popes."],
+["roots","The need for reform","Parishioners","Ordinary church members. They wanted meaningful religion and assurance of salvation, so they turned to relics and indulgences instead of their priests."],
+["roots","The need for reform","Salvation","Being saved from sin and accepted into heaven. The Catholic Church taught it took both faith and good works."],
+["roots","Indulgences and relics","Indulgence","A document sold by the Church and signed by the pope or another Church official that released the holder from all or part of the punishment for sin (for example, time in purgatory).","Indulgence = a “get out of punishment” certificate."],
+["roots","Indulgences and relics","Selling of indulgences","The Church sold indulgences to raise money. Critics said it let people buy forgiveness and made salvation almost mechanical. It was the main thing Luther attacked."],
+["roots","Indulgences and relics","Relics","Objects connected to saints or Jesus, like bones or pieces of clothing. Venerating (honoring) a relic could earn a person an indulgence."],
+["roots","Indulgences and relics","Pilgrimages to relics","Traveling to view relics became popular as a way to earn indulgences. Frederick the Wise collected more than 5,000 relics."],
+["roots","Indulgences and relics","Modern Devotion","A mystical movement that stressed following Jesus' teachings and downplayed Church rituals. Its focus on spiritual renewal helped Luther's ideas catch on."],
+
+["luther","Martin Luther's beliefs","Martin Luther","German monk and professor of the Bible at the University of Wittenberg who started the Protestant Reformation in 1517 with his Ninety-five Theses."],
+["luther","Martin Luther's beliefs","Salvation through faith alone","Luther's central belief: people are saved only by faith in God, not by good works. The Catholic Church taught that both faith and good works were needed.","Faith ALONE = no works needed for salvation."],
+["luther","Martin Luther's beliefs","Justification","Being made right with God. Luther (and later Calvin) taught “justification by faith alone.”"],
+["luther","Martin Luther's beliefs","The Bible as the sole source of truth","Luther said the Bible alone (not popes, priests, or Church tradition) is the source of religious truth.","Bible ALONE."],
+["luther","Martin Luther's beliefs","Luther's sacraments","Luther kept only two of the seven Catholic sacraments: baptism and the Eucharist (communion). He also supported letting clergy marry."],
+["luther","A break with the Church","Johann Tetzel","The monk who sold indulgences in Germany to raise money to rebuild St. Peter's Basilica in Rome. Luther's attack targeted him."],
+["luther","A break with the Church","Ninety-five Theses","Luther's list of 95 arguments attacking the sale of indulgences, made public on October 31, 1517. Printed copies spread his ideas all over Germany.","95 Theses, 1517: the spark."],
+["luther","A break with the Church","Excommunication","Being cut off from membership in the Church. The pope excommunicated Luther in 1521."],
+["luther","A break with the Church","Charles V","The Holy Roman Emperor (and king of Spain) during the Reformation. A Catholic who wanted to keep his empire Catholic, he summoned Luther to the Diet of Worms and made him an outlaw."],
+["luther","A break with the Church","Diet of Worms","The 1521 meeting (imperial diet = assembly) in the German city of Worms where Charles V ordered Luther to take back his ideas. Luther refused.","Not a meal: a “diet” is an assembly; Worms is a city."],
+["luther","A break with the Church","Edict of Worms","Charles V's order after the Diet of Worms that made Luther an outlaw within the Holy Roman Empire."],
+["luther","A break with the Church","Frederick III (Frederick the Wise)","The German prince (elector of Saxony) who protected Luther. He hid Luther after the Diet of Worms and protected him when he returned to Wittenberg in 1522.","Frederick = Luther's Friend."],
+["luther","Lutheranism","Lutheranism","The religious doctrine based on Luther's teachings. It became the first Protestant faith."],
+["luther","Lutheranism","Luther's appeal to the princes","Luther called on German princes to overthrow the papacy in Germany, set up a reformed German church, and reject most Catholic sacraments."],
+["luther","Lutheranism","Peasants' War (1524–1525)","German peasants revolted and expected Luther to support them. Instead he backed the princes to keep order. The princes crushed the revolt, and Luther's church became more dependent on the state."],
+["luther","Lutheranism","Printing press and the Reformation","The printing press spread Luther's ideas fast and made cheaper Bibles available to more people. It helped Protestantism spread “big time.”"],
+["luther","Lutheranism","Bible in the vernacular","Reformers wanted the Bible in people's own language so they could read it for themselves, without needing a priest who knew Latin. Wycliffe pushed for an English Bible; Luther translated it into German."],
+
+["empire","The emperor reacts","Holy Roman Empire","A large group of mostly German states ruled by an elected emperor. It was fragmented, which let individual princes choose to support Luther."],
+["empire","The emperor reacts","Why Charles V opposed the Reformation","Church leaders saw the Reformation as a threat to Church power. Charles V saw it as disrupting the political and social order of his empire."],
+["empire","The emperor reacts","Problems that distracted Charles V","Wars with France (his rival Francis I) and invasions by the Ottoman Turks kept Charles V busy, which gave Lutheranism time to grow stronger."],
+["empire","The emperor reacts","German princes and Luther","Germany's many separate states let rulers support Luther as a way to assert their own power and reject the pope's control (and take Church lands)."],
+["empire","Peace of Augsburg","Peace of Augsburg (1555)","The treaty that ended religious warfare in Germany. It officially recognized the religious split, let each German state choose Catholicism or Lutheranism, and gave Lutheran states the same legal rights as Catholic ones.","1555: Rulers choose the Religion."],
+["empire","Peace of Augsburg","Who chose the religion","Under the Peace of Augsburg the ruler of each state, not the people (subjects), decided the state's religion."],
+["empire","Peace of Augsburg","Only two choices","The Peace of Augsburg allowed only Catholicism or Lutheranism. Calvinists and Anabaptists were not included."],
+
+["calvin","Zwingli","Ulrich Zwingli","A priest in Zürich, Switzerland, who persuaded the city council to reform religion: he replaced the Catholic Mass with simple services of scripture reading, prayer, and sermons. He laid the groundwork for Swiss Protestantism."],
+["calvin","Zwingli","Zwingli's death (1531)","Zwingli tried to unite Protestants against Catholics. He was killed in 1531 in a war between Protestant and Catholic Swiss states, and leadership passed to John Calvin."],
+["calvin","Calvinism","John Calvin","French reformer (1509–1564) who converted to Protestantism and fled to Switzerland. After Zwingli, he became the leader of Swiss Protestantism and set up a strict church-run government in Geneva."],
+["calvin","Calvinism","Institutes of the Christian Religion (1536)","Calvin's book that explained Protestant beliefs and made him a leading Protestant thinker. The printing press spread it widely."],
+["calvin","Calvinism","Predestination","The belief that God has already decided (“preordained”) who will be saved and who will be damned. Calvin stressed it most.","Pre-destination = your destination was set before you were born."],
+["calvin","Calvinism","“The elect”","The people God has chosen (predestined) to be saved. Calvinists who believed they were among the elect felt sure they were doing God's work, which drove them to spread their faith."],
+["calvin","Calvinism","Calvinists","Followers of Calvin. They believed in justification by faith alone, predestination, and the all-powerful nature of God. Missionaries from Geneva spread Calvinism to France, the Netherlands, Scotland, and central and eastern Europe.","Calvinism replaced Lutheranism as the most important form of Protestantism."],
+["calvin","Calvinism","Theocracy in Geneva","Calvin set up a government in Geneva run by religious leaders, combining church and state to enforce strict religious discipline."],
+["calvin","Anabaptists","Anabaptists","Radical Protestants who believed in complete separation of church and state, adult (not infant) baptism, and the equality of all believers. Both Catholics and Protestants saw them as dangerous and persecuted them.","Ana = again: they baptized adults “again.”"],
+["calvin","Anabaptists","Adult baptism","Anabaptists baptized only adults who chose it as a voluntary spiritual rebirth. Catholics and other Protestants baptized infants."],
+["calvin","Anabaptists","Separation of church and state","Anabaptists rejected government authority in religion and refused to hold political office or serve in the military."],
+["calvin","Anabaptists","Münster (1535)","The German city where Anabaptists took refuge. An army of Catholics and Protestants captured it in 1535 and executed the Anabaptist leaders."],
+
+["england","Henry VIII","Henry VIII","King of England who broke from the Catholic Church after the pope refused to annul his marriage to Catherine of Aragon (he wanted a male heir). He made himself head of the new Church of England."],
+["england","Henry VIII","Annul","To declare a marriage invalid, as if it never happened. The pope's refusal to annul Henry VIII's marriage led to England's break with Rome."],
+["england","Henry VIII","Act of Supremacy (1534)","Law that made the king the head of the new Church of England, giving him control over its doctrine and appointments.","Supremacy = the king is supreme over the Church."],
+["england","Henry VIII","Church of England (Anglican Church)","The national church created when England broke with the pope in 1534, with the English monarch as its head."],
+["england","Henry VIII","Dissolving the monasteries","Henry VIII closed England's monasteries and gave away their land and wealth, which won nobles and merchants over to the Church of England."],
+["england","After Henry","Edward VI","Henry VIII's young son (with Jane Seymour) who became king at age 9. During his reign the Church of England moved toward Protestantism: clergy could marry and a Protestant service was created."],
+["england","After Henry","Mary I (“Bloody Mary”)","Henry VIII's Catholic daughter (mother: Catherine of Aragon) who became queen in 1553 and tried to restore Catholicism. She had about 300 Protestants burned as heretics, but by the end of her reign Protestantism was stronger."],
+["england","After Henry","Elizabeth I","Queen who set up a moderate Protestant Church of England, repealed laws favoring Catholics, and settled the religious conflicts."],
+
+["society","Reformation and society","Public education","Luther pushed for schools for all children. Protestant schools mixed humanist teaching methods with religious instruction and reached far more people than elite humanist schools."],
+["society","Reformation and society","Clerical marriage","Protestants ended the rule that clergy must stay celibate (unmarried), so ministers could marry."],
+["society","Reformation and society","Women in Protestant society","Traditional gender roles stayed: Protestants saw the husband as ruler of the household and the wife as obedient helper whose role was marriage, children, and the home."],
+["society","Reformation and society","Protestant work ethic","The Calvinist idea that hard work (diligence) and saving money (frugality) were signs of a godly life. Calvinists also accepted lending money, which helped economies grow."],
+["society","Reformation and society","Anti-Semitism","Hostility and discrimination against Jews. It stayed common after the Reformation: both Luther and the Catholic Church promoted discrimination against Jews who would not convert."],
+["society","Reformation and society","Ghetto","A separate, often walled-off section of a city where Jews were forced to live."],
+["society","Catholic Reformation","Catholic Reformation (Counter-Reformation)","The Catholic Church's response to the Reformation. Its three key parts: the Jesuits, papal reforms, and the Council of Trent. It revived the Church in the 1500s.","3 parts: Jesuits, Popes, Trent."],
+["society","Catholic Reformation","Jesuits (Society of Jesus)","Religious order founded by Ignatius of Loyola. Jesuits started schools and sent missionaries around the world to spread and restore Catholicism."],
+["society","Catholic Reformation","Ignatius of Loyola","Spanish founder of the Jesuits."],
+["society","Catholic Reformation","Teresa of Ávila","Spanish nun who reformed the Carmelite order, stressing strict poverty and spiritual discipline in convent life."],
+["society","Catholic Reformation","Papal reforms","Popes such as Paul III worked to end corruption and financial abuses in the Church, improving its moral authority."],
+["society","Catholic Reformation","Council of Trent (1545–1563)","Church council that reaffirmed Catholic teachings: salvation by faith AND good works, all seven sacraments, clerical celibacy, purgatory, and indulgences. It banned the selling of indulgences and gave Catholics one clear doctrine under the pope.","Trent kept indulgences but banned SELLING them."]
+];
+const ALL_CARDS = RAW.map((r,i)=>({id:r[0]+'-'+i, d:r[0], s:r[1], t:r[2], x:r[3], h:r[4]||''}));
+const HIDDEN = new Set();
+const CARDS = ALL_CARDS.filter(c=>!HIDDEN.has(c.d+'|'+c.t));
+
+const CHAINS = {
+  art:[
+    {label:'How the printing press changed Europe', steps:['Gutenberg: movable type (c. 1450)','Gutenberg Bible (c. 1455)','~40,000 titles by 1500','Cheaper books, more readers','Ideas spread fast (humanism, then the Reformation)']}
+  ],
+  roots:[
+    {label:'Timeline: early critics', steps:['Wycliffe (late 1300s): English Bible','Hus executed (1415)','Czech uprising in Bohemia (to 1436)','Erasmus: In Praise of Folly (1509)','Luther: Ninety-five Theses (1517)']}
+  ],
+  luther:[
+    {label:'Timeline: Luther breaks with Rome', steps:['Ninety-five Theses (Oct 31, 1517)','Excommunicated (1521)','Diet of Worms (1521)','Edict of Worms: outlaw','Hidden by Frederick III','Back to Wittenberg (1522)','Peasants\' War (1524–1525)']}
+  ],
+  empire:[
+    {label:'From Luther to the Peace', steps:['Luther\'s ideas spread (1517+)','Princes back Luther','Charles V fights France and the Ottomans','Years of religious war','Peace of Augsburg (1555)']}
+  ],
+  calvin:[
+    {label:'How Calvinism was established', steps:['Zwingli reforms Zürich','Zwingli killed in war (1531)','Calvin takes the lead','Institutes of the Christian Religion (1536)','Theocracy in Geneva','Missionaries spread it across Europe']}
+  ],
+  england:[
+    {label:'England\'s religion, ruler by ruler', steps:['Henry VIII: pope refuses annulment','Act of Supremacy (1534): Church of England','Edward VI: more Protestant','Mary I (1553): back to Catholic, burns ~300','Elizabeth I: moderate Protestant']}
+  ]
+};
+const TREE = '';
+const CHAIN_AT = {'art|The printing press':CHAINS.art[0],'roots|Wycliffe and Hus':CHAINS.roots[0],'luther|A break with the Church':CHAINS.luther[0],'empire|The emperor reacts':CHAINS.empire[0],'calvin|Calvinism':CHAINS.calvin[0],'england|Henry VIII':CHAINS.england[0]};
+
+const WATCH = {
+  ren:['There are no class notes for 10.3, so this deck covers every 10.3 item on your study guide using standard textbook facts. If your teacher said something different in class, go with your teacher.','Humanism (10.3) vs. Christian humanism (10.5): Italian humanists studied the classics to celebrate human achievement. Christian (Northern) humanists used the same study methods on the Bible to reform the Church.'],
+  art:['Realism vs. naturalism: they overlap a lot. Realism = showing people as they really are (real faces, emotions, proportions). Naturalism = copying what you observe in nature (anatomy, landscapes). Linear perspective is the technique that creates depth.','The printing press shows up in both 10.3 and 10.5. In 10.3: it spread humanist ideas and books. In 10.5: it spread Luther\'s Ninety-five Theses, Calvin\'s Institutes, and cheap Bibles.'],
+  roots:['Your study guide spells the names “Jean Wycliff” and “Jon Hus.” The usual spellings are John Wycliffe and Jan (or John) Hus. Same people.','Wycliffe = English, late 1300s, wanted an English Bible. Hus = Czech, inspired by Wycliffe, executed in 1415.','Erasmus wanted to reform the Church from inside. He never left it. Luther is the one who broke away.'],
+  luther:['Frederick III and Frederick the Wise are the same person: the prince of Saxony who protected Luther (and who also collected over 5,000 relics).','Diet of Worms = the meeting (1521). Edict of Worms = the order that made Luther an outlaw. Excommunication came from the pope; the outlaw order came from the emperor, Charles V.','Your slide says Luther\'s Theses kept only two sacraments and supported clergy marriage. Most historians place those ideas in Luther\'s writings right after 1517, but for your test, go with your notes.'],
+  empire:['Peace of Augsburg: the RULER chose the religion, not the people. And the only choices were Catholic or Lutheran (no Calvinists).'],
+  calvin:['Luther and Calvin agree on faith alone. What makes Calvin stand out is predestination (and Geneva).','Anabaptists were rejected by BOTH Catholics and other Protestants, mainly for separating church and state and for adult baptism.'],
+  england:['The English Reformation was different: it started for political and personal reasons (Henry VIII wanted his marriage annulled to get a male heir), not because of a debate over beliefs.','Order of rulers: Henry VIII → Edward VI (Protestant) → Mary I (Catholic) → Elizabeth I (moderate Protestant).'],
+  society:['The three key parts of the Counter-Reformation: (1) the Jesuits, (2) papal reforms, (3) the Council of Trent.','The Council of Trent did NOT get rid of indulgences. It kept them but banned selling them.']
+};
+
+const TABLES = {
+  'calvin|Anabaptists': {head:['Belief','Catholic Church','Luther','Calvin','Anabaptists'], rows:()=>[
+    ['How you are saved','Faith AND good works','Faith alone','Faith alone; God already chose (predestination)','Faith; voluntary spiritual rebirth'],
+    ['Religious authority','The pope, Church tradition, and the Bible','The Bible alone','The Bible alone','The Bible; all believers equal'],
+    ['Sacraments','Seven','Two: baptism and the Eucharist','Two: baptism and communion','Baptism (adults only) and communion'],
+    ['Baptism','Infants','Infants','Infants','Adults only'],
+    ['Church and state','Church above rulers','Relied on German princes','Theocracy in Geneva','Complete separation'],
+    ['Clergy marriage','No (celibacy)','Yes','Yes','Any member could minister']
+  ]},
+  'art|Renaissance artists': {head:['Artist','From','Known for'], rows:()=>[
+    ['Leonardo da Vinci','Italy (Florence)','Mona Lisa, The Last Supper, notebooks of inventions'],
+    ['Michelangelo','Italy (Florence)','David (statue), Sistine Chapel ceiling'],
+    ['Raphael','Italy','The School of Athens, Madonnas'],
+    ['Brunelleschi','Italy (Florence)','Dome of Florence Cathedral; linear perspective'],
+    ['Donatello','Italy (Florence)','Bronze statue of David'],
+    ['Masaccio','Italy (Florence)','First frescoes to use perspective'],
+    ['Jan van Eyck, Albrecht Dürer','Flanders, Germany','Oil paintings and prints with fine realistic detail']
+  ]},
+  'england|After Henry': {head:['Ruler','Religion','What happened'], rows:()=>[
+    ['Henry VIII','Church of England (Catholic-style beliefs)','Broke with the pope; Act of Supremacy (1534); closed monasteries'],
+    ['Edward VI','Protestant','Became king at 9; clergy could marry; new Protestant service'],
+    ['Mary I','Catholic','Tried to restore Catholicism; burned ~300 Protestants (“Bloody Mary”)'],
+    ['Elizabeth I','Moderate Protestant','Repealed pro-Catholic laws; settled religious conflicts']
+  ]},
+  'society|Catholic Reformation': {head:['Part','Who / what','What it did'], rows:()=>[
+    ['Jesuits','Ignatius of Loyola','Schools and missionaries to restore Catholicism worldwide'],
+    ['Papal reforms','Popes like Paul III','Ended corruption and financial abuses'],
+    ['Council of Trent','1545–1563','Reaffirmed faith + good works, 7 sacraments, celibacy, purgatory; banned selling indulgences'],
+    ['(Also) Teresa of Ávila','Spanish nun','Reformed the Carmelite order: strict poverty and discipline']
+  ]}
+};
+
+// Scenario questions: [deck, prompt, [options], correctIndex, explanation]
+const SCEN = [
+["ren","A scholar in 1350 travels to old monasteries searching for lost Latin manuscripts by Cicero so he can study and copy them. He is most likely:",["Petrarch","Martin Luther","Johann Tetzel","Charles V"],0,"Petrarch, the father of Italian humanism, hunted for forgotten classical manuscripts."],
+["ren","A student in Renaissance Florence studies grammar, rhetoric, history, poetry, and moral philosophy so she can become a good citizen. This is a:",["Liberal arts education","Jesuit missionary training","Monastic education focused only on prayer","Apprenticeship in a guild"],0,"The humanist liberal arts trained well-rounded citizens using the classics."],
+["ren","A rich banking family pays a sculptor to make statues for their city's cathedral. The family is acting as the sculptor's:",["Patron","Heretic","Elect","Clergy"],0,"Patrons, like the Medici, paid for Renaissance art."],
+["ren","A man is a painter, an engineer, a musician, and a scientist who studies anatomy. People would call him a:",["Renaissance man","Christian humanist","Calvinist","Anabaptist"],0,"A Renaissance (universal) man is skilled in many fields."],
+["ren","Which change best shows Renaissance secularism?",["People took more interest in worldly life and human achievement, not only the afterlife.","People stopped being Christian.","The pope took control of every kingdom.","Art showed only flat, symbolic religious figures."],0,"Secularism = more focus on this world. Renaissance people were still Christian."],
+["art","A painter draws lines that all meet at one point on the horizon so the hallway in her painting seems to go back into the distance. She is using:",["Linear perspective","Fresco","Satire","Vernacular"],0,"Linear perspective uses a vanishing point to create depth."],
+["art","An artist studies corpses to learn exactly how muscles look, then paints bodies that look real. This shows the Renaissance goal of:",["Naturalism and realism","Predestination","Simony","Symbolic medieval style"],0,"Renaissance artists copied nature and anatomy to make figures realistic."],
+["art","Within 50 years of a new invention, the number of books in Europe explodes and more ordinary people learn to read. The invention is:",["The printing press","The telescope","The compass","Oil paint"],0,"Gutenberg's printing press made books cheap and common."],
+["art","A painting shows Plato and Aristotle among other ancient philosophers in a grand classical building. It was painted by:",["Raphael","Michelangelo","Donatello","Jan van Eyck"],0,"Raphael painted The School of Athens."],
+["art","Which work is matched with the right artist?",["Sistine Chapel ceiling: Michelangelo","Mona Lisa: Raphael","Dome of Florence Cathedral: Leonardo da Vinci","The School of Athens: Brunelleschi"],0,"Michelangelo painted the Sistine Chapel ceiling. Leonardo = Mona Lisa, Raphael = School of Athens, Brunelleschi = the dome."],
+["roots","A villager pays money for a signed document promising his dead mother less time in purgatory. He bought:",["An indulgence","A relic","An annulment","An edict"],0,"An indulgence released the holder from some or all punishment for sin."],
+["roots","An English priest in the 1380s says the Bible, not the pope, is the final authority and that it should be translated into English. He is:",["John Wycliffe","Jan Hus","Ulrich Zwingli","Erasmus"],0,"Wycliffe wanted an English Bible and rejected reliance on priests and popes."],
+["roots","A Czech reformer criticizes corrupt clergy, is condemned as a heretic, and is executed in 1415. He is:",["Jan Hus","John Calvin","Martin Luther","Johann Tetzel"],0,"Hus was executed in 1415, sparking a Czech uprising."],
+["roots","A scholar writes a funny book mocking greedy monks and foolish customs, but he stays in the Catholic Church and wants to fix it from inside. He is:",["Erasmus","Luther","Henry VIII","Calvin"],0,"Erasmus wrote In Praise of Folly and wanted reform within the Church."],
+["roots","Frederick the Wise owned more than 5,000 bones and objects linked to saints. These were:",["Relics","Indulgences","Theses","Sacraments"],0,"Relics are objects tied to saints or Jesus; venerating them could earn indulgences."],
+["roots","A priest uses his Church office to get rich and rarely gives his parishioners spiritual guidance. This is an example of:",["Corruption in the Catholic Church","Christian humanism","Predestination","The Modern Devotion"],0,"Clergy using offices for personal gain was a major complaint."],
+["luther","A monk says: “You can't buy your way into heaven. Only faith in God saves you.” This idea is:",["Salvation through faith alone","Predestination","Adult baptism","The Act of Supremacy"],0,"Luther taught salvation through faith alone, not good works."],
+["luther","In 1521 a professor is called before the emperor and other leaders in a German city and told to take back his writings. He refuses. This was the:",["Diet of Worms","Council of Trent","Peace of Augsburg","Peasants' War"],0,"Charles V summoned Luther to the Diet of Worms in 1521."],
+["luther","After the emperor declares Luther an outlaw, a German prince secretly hides him in a castle. The prince is:",["Frederick III (Frederick the Wise)","Charles V","Henry VIII","Francis I"],0,"Frederick III of Saxony protected Luther."],
+["luther","German peasants revolt in 1524 hoping Luther will back them. What did Luther do?",["He supported the princes, who crushed the revolt.","He led the peasants into battle.","He fled to Geneva.","He asked the pope to help the peasants."],0,"Luther backed the princes to keep order; the revolt was crushed."],
+["luther","A monk travels through German towns selling indulgences to raise money for St. Peter's Basilica. He is:",["Johann Tetzel","Erasmus","Ignatius of Loyola","Ulrich Zwingli"],0,"Tetzel's sales provoked Luther's Ninety-five Theses."],
+["luther","Within weeks, copies of a professor's arguments against indulgences are being read all over Germany. What made this possible?",["The printing press","The Council of Trent","The Act of Supremacy","The Jesuits"],0,"Printed copies spread the Ninety-five Theses fast."],
+["empire","In 1555 a German duke decides his whole duchy will be Lutheran, and his subjects must follow. Which agreement allowed this?",["Peace of Augsburg","Edict of Worms","Act of Supremacy","Council of Trent"],0,"The Peace of Augsburg let rulers choose Catholicism or Lutheranism for their states."],
+["empire","Charles V wants to crush Lutheranism but keeps getting pulled away. What distracted him?",["Wars with France and invasions by the Ottoman Turks","A war with England over Henry VIII","A revolt of the Jesuits","The Council of Trent"],0,"Wars with France and the Ottomans gave Lutheranism time to grow."],
+["empire","A German prince supports Luther partly so he can take power away from the pope in his lands. This shows that:",["Germany's fragmented states let rulers use the Reformation to gain power","Charles V controlled every German prince","Princes had no say in religion","Luther wanted the pope to rule Germany"],0,"Princes used Lutheranism to assert their own authority."],
+["calvin","A preacher teaches that before anyone is born, God has already chosen who will be saved and who won't. This belief is:",["Predestination","Salvation by good works","Adult baptism","Indulgences"],0,"Predestination: God preordained who is saved."],
+["calvin","A city is run by religious leaders who enforce strict rules on behavior for everyone. This describes:",["Calvin's Geneva","Luther's Wittenberg","Elizabeth I's England","Münster after 1535"],0,"Calvin set up a theocracy in Geneva."],
+["calvin","A group refuses to baptize babies, will not serve in the army, and says government has no power over religion. They are:",["Anabaptists","Lutherans","Jesuits","Anglicans"],0,"Anabaptists: adult baptism and complete separation of church and state."],
+["calvin","A priest in Zürich replaces the Mass with simple services of Bible reading, prayer, and sermons. He is:",["Ulrich Zwingli","John Calvin","Johann Tetzel","Thomas More"],0,"Zwingli led Zürich's reforms."],
+["calvin","A Calvinist merchant feels sure God chose him to be saved, so he works hard to spread his faith. He believes he is one of:",["The elect","The clergy","The Jesuits","The heretics"],0,"“The elect” are those God predestined to be saved."],
+["england","A king wants to end his marriage because it has produced no son. The pope refuses, so the king breaks with Rome. This king is:",["Henry VIII","Charles V","Edward VI","Frederick III"],0,"Henry VIII broke with the Catholic Church after the pope refused the annulment."],
+["england","A 1534 law says the English king, not the pope, is head of the church in England. This is the:",["Act of Supremacy","Peace of Augsburg","Edict of Worms","Ninety-five Theses"],0,"The Act of Supremacy made the king head of the Church of England."],
+["england","A queen tries to bring England back to Catholicism and has about 300 Protestants burned. She is:",["Mary I","Elizabeth I","Catherine of Aragon","Teresa of Ávila"],0,"Mary I, “Bloody Mary.”"],
+["england","A queen sets up a moderate Protestant church and calms religious fighting in England. She is:",["Elizabeth I","Mary I","Anne Boleyn","Isabella of Spain"],0,"Elizabeth I created a moderate Protestant Church of England."],
+["society","A Spanish soldier turned priest founds an order that builds schools and sends missionaries to Asia and the Americas. He is:",["Ignatius of Loyola","John Calvin","Ulrich Zwingli","Johann Tetzel"],0,"Ignatius of Loyola founded the Jesuits."],
+["society","Catholic bishops meet for years and confirm the seven sacraments and the need for both faith and good works, but ban selling indulgences. This is the:",["Council of Trent","Diet of Worms","Peace of Augsburg","Act of Supremacy"],0,"The Council of Trent (1545–1563)."],
+["society","A Calvinist family works long hours and saves its money instead of spending it, believing this pleases God. This reflects the:",["Protestant work ethic","Modern Devotion","Act of Supremacy","Diet of Worms"],0,"The Protestant work ethic: diligence and frugality."],
+["society","After the Reformation, a city forces its Jewish residents to live in one walled-off district. This district is a:",["Ghetto","Monastery","Theocracy","Diet"],0,"A ghetto was a separate section where Jews were forced to live."]
+];
+
+// Exam-style bank: [deck, stem, [options], correctIndex, explanation]
+const EXAM = [
+["ren","Which of the following best describes the Renaissance?",["A rebirth of interest in the learning and art of ancient Greece and Rome that began in Italy","A religious movement that split the Catholic Church in the 1500s","A period when Europeans stopped caring about art and learning","A war between Catholic and Protestant states in Germany"],0,"Renaissance = rebirth of classical culture, starting in the Italian city-states. The Reformation is the trap: that's the religious split."],
+["ren","Which factor best explains why the Renaissance began in Italy?",["Italy's wealthy trading city-states and its closeness to the ruins and writings of ancient Rome","Italy had the first printing press","Martin Luther lived in Italy","Italy was the center of the Protestant Reformation"],0,"Wealth from trade paid for art and learning, and Roman heritage was all around. The printing press was German."],
+["ren","Petrarch is best known as:",["The father of Italian Renaissance humanism, who searched for lost classical manuscripts","The inventor of movable type","The monk who posted the Ninety-five Theses","The founder of the Jesuits"],0,"Petrarch started the humanist hunt for the classics."],
+["ren","Which statement best describes humanism?",["An intellectual movement based on studying the Greek and Roman classics and celebrating human potential","A belief that God has already chosen who will be saved","A movement to separate church and state completely","A style of art that used only religious symbols"],0,"Humanism = the classics + human achievement. Predestination is Calvin."],
+["ren","The main goal of a humanist liberal arts education was to:",["Produce well-rounded, virtuous citizens who could take part in public life","Train priests to sell indulgences","Teach only religious rituals","Prepare peasants for farm work"],0,"Liberal arts trained citizens through grammar, rhetoric, history, poetry, and moral philosophy."],
+["ren","How did Christian humanism differ from Italian humanism?",["Christian humanists applied humanist study to the Bible to reform the Church and religious life.","Christian humanists rejected the Greek and Roman classics entirely.","Christian humanists wanted to replace Christianity with ancient Roman religion.","There was no difference; they were the same movement in the same place."],0,"Northern (Christian) humanists used the same methods on Christian texts to reform the Church."],
+["ren","Which person is the best example of a “Renaissance man”?",["Leonardo da Vinci, a painter, engineer, and scientist","Johann Tetzel, a seller of indulgences","Charles V, a Holy Roman Emperor","Mary I, a queen of England"],0,"Leonardo was skilled in many different fields."],
+["ren","Why did writing in the vernacular matter?",["It let ordinary people who didn't know Latin read books and, later, the Bible.","It kept books available only to priests.","It meant books could only be printed in Latin.","It was banned by every Renaissance city-state."],0,"Vernacular = everyday language, which widened the reading audience."],
+["art","Which technique did Renaissance artists use to make flat paintings look three-dimensional?",["Linear perspective","Fresco","Satire","Mosaic"],0,"Linear perspective uses a vanishing point. A fresco is paint on wet plaster: it says where the painting is, not how depth is shown."],
+["art","Renaissance realism in art meant:",["Showing people as they really look, with real emotions and correct proportions","Painting only flat, gold-background religious symbols","Refusing to show human figures","Copying medieval styles exactly"],0,"Realism broke from flat medieval art."],
+["art","An artist carefully studies plants, landscapes, and human anatomy so the paintings match what appears in nature. This best describes:",["Naturalism","Predestination","Christian humanism","Linear perspective only"],0,"Naturalism = portraying things as they appear in nature."],
+["art","Which pair is correctly matched?",["Michelangelo: the statue David and the Sistine Chapel ceiling","Raphael: the Mona Lisa","Leonardo da Vinci: the dome of Florence Cathedral","Brunelleschi: The School of Athens"],0,"Mona Lisa = Leonardo; dome = Brunelleschi; School of Athens = Raphael."],
+["art","Who developed the printing press with movable metal type around 1450?",["Johannes Gutenberg","Martin Luther","Desiderius Erasmus","Petrarch"],0,"Gutenberg, in Mainz, Germany."],
+["art","Which was the most important effect of the printing press?",["Ideas spread quickly because books became cheaper and more people could read them","Books became rarer and more expensive","Only the pope was allowed to own books","It ended the use of the vernacular"],0,"Cheap books spread humanism and, later, the Reformation."],
+["art","How did the printing press connect the Renaissance to the Reformation?",["It spread humanist ideas and then Luther's writings and Bibles to huge numbers of people.","It was invented by Martin Luther to print his Theses.","It was banned in Germany until after 1600.","It only printed Latin works for priests."],0,"The same invention that spread humanism spread Luther's ideas and vernacular Bibles."],
+["art","Renaissance artists were often paid by:",["Wealthy patrons such as the Medici family and the popes","Anabaptist communities","Peasants who revolted in 1524","The Council of Trent"],0,"Patrons paid for most Renaissance art."],
+["roots","Which statement best explains why intellectual changes of the 1400s led to the Reformation?",["Humanism and the printing press got people reading the Bible and questioning Church practices.","The Church banned all books in the 1400s.","Kings ordered everyone to become Protestant.","The Jesuits taught people to reject the pope."],0,"Humanist study and printed books laid the groundwork."],
+["roots","How were the beliefs of Wycliffe, Hus, and Erasmus similar?",["All three criticized abuses and corruption in the Catholic Church.","All three founded new Protestant churches.","All three supported selling indulgences.","All three were executed by Charles V."],0,"This is your notes' “Comparing” question: they all criticized Church corruption. None of them started a new church (that was Luther)."],
+["roots","John Wycliffe believed that:",["The Bible was the absolute truth and should be translated into English","The pope's word was more important than the Bible","Only priests should be able to read the Bible","Indulgences were the best path to salvation"],0,"Wycliffe rejected reliance on priests and popes and wanted an English Bible."],
+["roots","What happened after Jan Hus was executed as a heretic in 1415?",["The Czechs started a revolutionary uprising in Bohemia that lasted until 1436.","The pope immediately ended the sale of indulgences.","Luther posted the Ninety-five Theses.","England broke with the Catholic Church."],0,"Hus's execution set off the Bohemian uprising."],
+["roots","Erasmus wanted to:",["Reform the Catholic Church from within, stressing inward faith over rituals","Start a new church separate from Rome","Increase the number of pilgrimages and relics","Make the king head of the Church"],0,"Erasmus stayed Catholic. That's why people said he “laid the egg that Luther hatched.”"],
+["roots","What does the saying “Erasmus laid the egg that Luther hatched” mean?",["Erasmus's criticism of the Church prepared the way for Luther's Reformation.","Erasmus and Luther worked together to found Lutheranism.","Erasmus opposed everything Luther stood for.","Luther taught Erasmus how to write."],0,"Erasmus didn't intend a break, but his ideas paved the way for Luther."],
+["roots","In Praise of Folly was:",["A satire by Erasmus criticizing Church abuses and society's morals","Luther's list of arguments against indulgences","Calvin's explanation of Protestant beliefs","The law that made Henry VIII head of the Church"],0,"Erasmus, 1509."],
+["roots","Why was the sale of indulgences controversial?",["It seemed to let people buy forgiveness of sin with money, turning salvation into a transaction.","It was illegal under the Peace of Augsburg.","Only Protestants could buy them.","Indulgences were used to fund Anabaptist churches."],0,"Critics said it made salvation mechanical and something you could buy."],
+["roots","Which best describes corruption in the Catholic Church before the Reformation?",["Popes focused on politics and wealth, and many clergy used their offices for personal gain.","The Church refused to take part in politics.","Priests gave too much spiritual guidance.","The pope banned relics and pilgrimages."],0,"Political popes and greedy clergy left people spiritually unsatisfied."],
+["roots","Why did many parishioners rely on relics and indulgences?",["They wanted assurance of salvation and weren't getting spiritual guidance from their priests.","The Bible ordered them to buy indulgences.","Luther told them to.","Relics were free and handed out by kings."],0,"Ordinary people turned to relics and indulgences instead of their priests."],
+["luther","Which belief was at the center of Martin Luther's teachings?",["People are saved through faith alone, not by good works.","People are saved by buying indulgences.","Only the pope can interpret the Bible.","Good works alone guarantee salvation."],0,"Faith alone. The Catholic Church taught faith AND good works."],
+["luther","How did Luther's view of salvation differ from the Catholic Church's?",["Luther said faith alone saves; the Church said both faith and good works are needed.","Luther said good works alone save; the Church said faith alone.","They had the same view.","Luther said only the elect could do good works; the Church said salvation was predestined."],0,"This is the core disagreement."],
+["luther","What did Luther say was the only source of religious truth?",["The Bible","The pope","Church councils","The Holy Roman Emperor"],0,"Luther: the Bible alone."],
+["luther","What was the main target of Luther's Ninety-five Theses?",["The sale of indulgences","Henry VIII's divorce","The Peace of Augsburg","Calvin's theocracy"],0,"The Theses (1517) attacked indulgences."],
+["luther","When did Luther make his Ninety-five Theses public?",["October 31, 1517","1415","1534","1555"],0,"1415 = Hus executed. 1534 = Act of Supremacy. 1555 = Peace of Augsburg."],
+["luther","What was the Diet of Worms?",["A 1521 assembly where Charles V ordered Luther to take back his ideas","A meal Luther ate in hiding","A Catholic council that banned indulgence sales","The treaty that ended Germany's religious wars"],0,"A diet is an imperial assembly; Worms is a city. Council of Trent and Peace of Augsburg are the traps."],
+["luther","Which statement about the Edict of Worms is correct?",["The emperor issued it to make Luther an outlaw in the empire.","The pope issued it to excommunicate Luther.","It let German states choose their religion.","It made Henry VIII head of the Church."],0,"Pope = excommunication. Emperor (Charles V) = Edict of Worms (outlaw)."],
+["luther","Who protected Luther after he was declared an outlaw?",["Frederick III (Frederick the Wise)","Charles V","Pope Paul III","Ignatius of Loyola"],0,"Frederick hid Luther and protected him when he returned to Wittenberg in 1522."],
+["luther","Why was Charles V opposed to Luther?",["He saw Luther's movement as a threat to the political and social order of his Catholic empire.","He wanted to become a Lutheran himself.","Luther had attacked Charles V's army.","Charles V was an Anabaptist."],0,"Charles V wanted to keep his empire Catholic and orderly."],
+["luther","Which became the first Protestant faith?",["Lutheranism","Calvinism","Anglicanism","Anabaptism"],0,"Lutheranism came first."],
+["luther","How did Luther respond to the Peasants' War (1524–1525)?",["He sided with the princes, and his church became more dependent on state rulers.","He led the peasants against the princes.","He asked Charles V to give the peasants land.","He ignored it completely."],0,"Luther backed the princes to keep order for spreading the Gospel."],
+["luther","Which sacraments did Luther keep?",["Only baptism and the Eucharist","All seven Catholic sacraments","None at all","Only marriage and confession"],0,"Luther kept two; the Catholic Church kept seven."],
+["luther","How did the printing press help the Reformation?",["Printed copies of Luther's writings and cheaper Bibles spread Protestant ideas quickly.","It was used only to print indulgences.","The Church controlled every press, so it slowed the Reformation.","It was not invented until after the Reformation."],0,"The press spread Luther's ideas “big time.”"],
+["luther","Why did reformers want the Bible in the vernacular?",["So ordinary people could read it themselves instead of relying on priests","So only scholars could read it","To make it more expensive","Because Latin had been banned"],0,"Vernacular Bibles cut out the middleman."],
+["luther","Luther's excommunication in 1521 meant he was:",["Cut off from membership in the Catholic Church","Made head of a new German church by the pope","Sentenced to death by the Council of Trent","Elected Holy Roman Emperor"],0,"Excommunication = removal from the Church."],
+["empire","Which best explains why Lutheranism survived despite Charles V's opposition?",["Wars with France and the Ottoman Turks distracted Charles V, and German princes protected Luther.","Charles V converted to Lutheranism.","The pope supported Luther.","England invaded Germany to protect Lutherans."],0,"Distractions plus princely support let Lutheranism grow."],
+["empire","What did the Peace of Augsburg (1555) do?",["Ended religious war in Germany and let each state's ruler choose Catholicism or Lutheranism","Made Calvinism the official religion of Germany","Made Luther an outlaw","Created the Church of England"],0,"Augsburg = rulers choose, Catholic or Lutheran."],
+["empire","Under the Peace of Augsburg, who decided a German state's religion?",["The state's ruler","Each individual person","The pope","John Calvin"],0,"Rulers, not their subjects, chose the religion."],
+["empire","Which group was left out of the Peace of Augsburg?",["Calvinists","Lutherans","Catholics","German princes"],0,"Only Catholicism and Lutheranism were allowed."],
+["empire","Why did many German princes support Luther?",["It let them assert their own authority and reject the pope's control.","Charles V ordered them to.","They wanted more indulgences sold.","Luther promised to make them kings of England."],0,"Fragmented Germany let princes use the Reformation to gain power."],
+["calvin","Which belief is most closely associated with John Calvin?",["Predestination","Salvation through good works","Adult baptism","Purgatory"],0,"Calvin stressed predestination. Adult baptism = Anabaptists."],
+["calvin","Who are “the elect”?",["The people God has chosen ahead of time to be saved","The cardinals who elect the pope","The princes who chose religion under the Peace of Augsburg","Members of the Diet of Worms"],0,"In Calvinism, the elect are those predestined for salvation."],
+["calvin","How did belief in predestination affect Calvinists?",["Believing they were among the elect gave them confidence to spread their faith and do God's work.","It made them stop going to church.","It made them buy more indulgences.","It led them to obey the pope."],0,"Predestination empowered Calvinists to spread their faith."],
+["calvin","What did Luther and Calvin agree on?",["Justification (salvation) by faith alone","Predestination as the central belief","A theocracy in Geneva","Adult-only baptism"],0,"Both taught faith alone. Predestination is Calvin's emphasis."],
+["calvin","Which event led to John Calvin becoming the leader of Swiss Protestantism?",["Ulrich Zwingli was killed in a war between Protestant and Catholic states in 1531.","Calvin was elected pope.","Luther moved to Geneva.","The Peace of Augsburg named him leader."],0,"Zwingli's death in 1531 shifted leadership to Calvin."],
+["calvin","What was Calvin's Institutes of the Christian Religion (1536)?",["A book explaining Protestant beliefs that made Calvin a leading thinker","A law making Calvin king of Switzerland","A list of 95 complaints about indulgences","The Catholic response to Protestantism"],0,"The printing press spread it widely."],
+["calvin","Calvin's government in Geneva is best described as a:",["Theocracy","Democracy with no religion","Monarchy ruled by Henry VIII","Part of the Holy Roman Empire ruled by Charles V"],0,"Church leaders and state power combined to enforce religious discipline."],
+["calvin","Where did missionaries from Geneva spread Calvinism?",["France, the Netherlands, Scotland, and central and eastern Europe","Only Italy and Spain","Only to the Americas","Nowhere; Calvinism stayed in Geneva"],0,"Calvinism replaced Lutheranism as the most important form of Protestantism."],
+["calvin","Why did both Catholics and Protestants view Anabaptists as radicals?",["They rejected infant baptism and government authority over religion, refusing political office and military service.","They supported the sale of indulgences.","They wanted the pope to rule all of Europe.","They followed Henry VIII."],0,"Adult baptism and complete separation of church and state alarmed everyone."],
+["calvin","Which practice set Anabaptists apart?",["Baptizing only adults who chose it","Keeping all seven sacraments","Making the king head of the church","Buying relics"],0,"Ana = “again”: adult baptism."],
+["calvin","What happened at Münster in 1535?",["An army of Catholics and Protestants captured the city and executed Anabaptist leaders.","Luther posted his Ninety-five Theses.","The Council of Trent first met.","Calvin set up his theocracy."],0,"Anabaptists were persecuted by both sides."],
+["calvin","Which statement about Ulrich Zwingli is correct?",["He led religious reforms in Zürich, replacing the Mass with simple services.","He founded the Jesuits.","He wrote In Praise of Folly.","He was Holy Roman Emperor."],0,"Zwingli laid the groundwork for Swiss Protestantism."],
+["england","What made the English Reformation different from the Reformation in Germany?",["It began for political and personal reasons (the king's marriage), not a debate over beliefs.","It began when a monk posted theses about indulgences.","It was led by Anabaptists.","England never broke from the Catholic Church."],0,"Henry VIII wanted an annulment to get a male heir."],
+["england","Why did England break from the Catholic Church?",["The pope refused to annul Henry VIII's marriage.","Henry VIII believed in predestination.","Charles V forced England to become Protestant.","The Peace of Augsburg required it."],0,"The annulment fight caused the break."],
+["england","What did the Act of Supremacy (1534) do?",["Made the English king head of the Church of England","Made the pope head of the English government","Allowed German states to choose their religion","Made Luther an outlaw"],0,"The king gained control over doctrine and appointments."],
+["england","Why did Henry VIII dissolve the monasteries?",["To take their wealth and give it to nobles and merchants, winning their support for the Church of England","Because the pope ordered it","To build Jesuit schools","To pay for St. Peter's Basilica"],0,"Giving away monastery land bought support."],
+["england","What happened to the Church of England under Edward VI?",["It moved toward Protestantism: clergy could marry and a Protestant service was created.","It returned to full Catholicism.","It was abolished.","It came under the control of Charles V."],0,"Edward's reign pushed the church in a Protestant direction."],
+["england","Why was Mary I called “Bloody Mary”?",["She had about 300 Protestants burned while trying to restore Catholicism.","She led the Peasants' War.","She executed Martin Luther.","She fought the Ottoman Turks."],0,"Her plan backfired: Protestantism grew stronger."],
+["england","What did Elizabeth I do about religion?",["She set up a moderate Protestant Church of England and settled religious conflicts.","She returned England to the pope.","She made England Anabaptist.","She banned the Bible in English."],0,"Elizabeth's church was moderate Protestant."],
+["england","Which list shows England's rulers in the correct order?",["Henry VIII → Edward VI → Mary I → Elizabeth I","Henry VIII → Mary I → Elizabeth I → Edward VI","Elizabeth I → Mary I → Edward VI → Henry VIII","Edward VI → Henry VIII → Elizabeth I → Mary I"],0,"Henry, then his son Edward, then Mary, then Elizabeth."],
+["society","How did the Reformation affect education?",["Luther promoted public schools for all children, reaching more people than elite humanist schools.","Schools were closed across Protestant Europe.","Only priests were allowed to learn to read.","Education was left entirely to the Jesuits in Protestant lands."],0,"Protestant schools combined humanist methods and religious instruction."],
+["society","What was Luther's view of women in society?",["Women's role was to be wives and mothers who obeyed their husbands; traditional gender roles stayed.","Women should become ministers and lead churches.","Women should not marry.","Women should rule the German states."],0,"This is your notes' “Explaining” question. Protestants kept the husband as ruler and the wife as helper."],
+["society","How did Protestantism change marriage?",["It ended the requirement that clergy stay celibate.","It banned all marriages.","It required priests to stay unmarried.","It let the pope choose everyone's spouse."],0,"Clergy could marry."],
+["society","The “Protestant work ethic” refers to:",["Calvinist belief in hard work and saving money as signs of a godly life","Luther's Ninety-five Theses","The Jesuits' missionary work","Paying for indulgences with labor"],0,"Diligence and frugality; Calvinists also accepted lending."],
+["society","Which statement about anti-Semitism during the Reformation is correct?",["It continued: both Luther and the Catholic Church promoted discrimination against Jews who would not convert.","The Reformation ended anti-Semitism in Europe.","Only Catholics discriminated against Jews.","Luther demanded equal rights for Jews."],0,"Anti-Semitism persisted on both sides."],
+["society","What were the three key elements of the Catholic (Counter-) Reformation?",["The Jesuits, papal reforms, and the Council of Trent","The Ninety-five Theses, the Diet of Worms, and the Peace of Augsburg","Predestination, adult baptism, and theocracy","The Act of Supremacy, the dissolution of monasteries, and Bloody Mary"],0,"This is your notes' “Describing” question."],
+["society","Who founded the Jesuits?",["Ignatius of Loyola","Teresa of Ávila","John Calvin","Pope Paul III"],0,"Ignatius of Loyola. Teresa of Ávila reformed the Carmelites."],
+["society","What did the Jesuits mainly do?",["Started schools and sent missionaries worldwide to spread and restore Catholicism","Sold indulgences in Germany","Fought for Henry VIII","Translated the Bible into German for Luther"],0,"Education and missionary work."],
+["society","Teresa of Ávila is known for:",["Reforming the Carmelite order of nuns with strict poverty and discipline","Founding the Church of England","Writing the Ninety-five Theses","Leading the Peasants' War"],0,"A Spanish nun and Catholic reformer."],
+["society","What did the Council of Trent decide about indulgences?",["It kept indulgences but banned selling them.","It made selling indulgences the Church's main income.","It abolished indulgences completely.","It let each ruler decide."],0,"Trent upheld indulgences and purgatory but banned the sale."],
+["society","Which teaching did the Council of Trent reaffirm?",["Salvation requires both faith and good works.","Salvation comes by faith alone.","Only two sacraments are valid.","Clergy should be allowed to marry."],0,"Trent rejected the Protestant positions: faith + works, seven sacraments, celibacy."],
+["society","What was the overall result of the Catholic Reformation?",["A unified Catholic doctrine under the pope, and Catholics more confident defending their faith","The end of the Catholic Church","The pope accepting Lutheranism","Catholicism being banned in Spain"],0,"The Church was revived and unified."]
+];
+
+// Distractor safety: cards that must never be offered as wrong answers for each other.
+const APPROACH=new Set();
+const GENERAL=new Set();
+const UMBRELLA=['ren|The Renaissance','roots|Protestant Reformation','roots|Corruption in the Catholic Church','society|Catholic Reformation (Counter-Reformation)','luther|Martin Luther','calvin|Calvinists','art|Renaissance artists\' goals','art|Effects of the printing press'];
+const PAIR_GROUPS = [
+ ['*','ren|Humanism','ren|Greek and Roman “classics”','ren|Liberal arts','ren|Petrarch','ren|Christian humanism (Northern humanism)'],
+ ['*','ren|Secularism','ren|Individualism','ren|Renaissance man (universal man)'],
+ ['*','ren|Why it began in Italy','ren|Florence and the Medici','ren|Patron'],
+ ['*','ren|Christian humanism (Northern humanism)','roots|Desiderius Erasmus','roots|In Praise of Folly (1509)','roots|“Erasmus laid the egg that Luther hatched”','roots|Intellectual changes of the 1400s'],
+ ['*','ren|Vernacular','luther|Bible in the vernacular','roots|John Wycliffe'],
+ ['*','art|Realism','art|Naturalism','art|Linear perspective','art|Renaissance artists\' goals'],
+ ['*','art|Brunelleschi','art|Masaccio','art|Linear perspective'],
+ ['*','art|Leonardo da Vinci','ren|Renaissance man (universal man)'],
+ ['*','art|Fresco','art|Michelangelo','art|Masaccio','art|Leonardo da Vinci'],
+ ['*','art|Michelangelo','art|Donatello'],
+ ['*','art|Printing press','art|Johannes Gutenberg','art|Gutenberg Bible','art|Effects of the printing press','luther|Printing press and the Reformation'],
+ ['*','roots|John Wycliffe','roots|Jan Hus (John Hus)','roots|Heretic'],
+ ['*','roots|Indulgence','roots|Selling of indulgences','roots|Relics','roots|Pilgrimages to relics','luther|Johann Tetzel','luther|Ninety-five Theses','roots|Parishioners'],
+ ['*','roots|Corruption in the Catholic Church','roots|Clergy','roots|Parishioners','roots|Selling of indulgences'],
+ ['*','roots|Salvation','luther|Salvation through faith alone','luther|Justification'],
+ ['*','roots|Modern Devotion','roots|Desiderius Erasmus'],
+ ['*','roots|Pilgrimages to relics','luther|Frederick III (Frederick the Wise)'],
+ ['*','luther|Martin Luther','luther|Lutheranism','luther|Ninety-five Theses','luther|Salvation through faith alone','luther|The Bible as the sole source of truth'],
+ ['*','luther|Salvation through faith alone','luther|Justification','luther|The Bible as the sole source of truth','luther|Luther\'s sacraments'],
+ ['*','luther|Charles V','luther|Diet of Worms','luther|Edict of Worms','luther|Excommunication','luther|Frederick III (Frederick the Wise)'],
+ ['*','luther|Lutheranism','luther|Luther\'s appeal to the princes','luther|Peasants\' War (1524–1525)','empire|German princes and Luther'],
+ ['*','luther|Charles V','empire|Why Charles V opposed the Reformation','empire|Problems that distracted Charles V','empire|Holy Roman Empire'],
+ ['*','empire|Holy Roman Empire','empire|German princes and Luther'],
+ ['*','empire|Peace of Augsburg (1555)','empire|Who chose the religion','empire|Only two choices'],
+ ['*','calvin|Ulrich Zwingli','calvin|Zwingli\'s death (1531)','calvin|John Calvin'],
+ ['*','calvin|John Calvin','calvin|Institutes of the Christian Religion (1536)','calvin|Predestination','calvin|“The elect”','calvin|Calvinists','calvin|Theocracy in Geneva'],
+ ['*','calvin|Predestination','calvin|“The elect”','roots|John Wycliffe'],
+ ['*','calvin|Anabaptists','calvin|Adult baptism','calvin|Separation of church and state','calvin|Münster (1535)'],
+ ['*','calvin|Calvinists','society|Protestant work ethic'],
+ ['*','england|Henry VIII','england|Annul','england|Act of Supremacy (1534)','england|Church of England (Anglican Church)','england|Dissolving the monasteries'],
+ ['*','england|Edward VI','england|Mary I (“Bloody Mary”)','england|Elizabeth I','england|Church of England (Anglican Church)'],
+ ['*','society|Public education','society|Jesuits (Society of Jesus)'],
+ ['*','society|Clerical marriage','luther|Luther\'s sacraments','england|Edward VI','society|Council of Trent (1545–1563)'],
+ ['*','society|Women in Protestant society','society|Clerical marriage'],
+ ['*','society|Anti-Semitism','society|Ghetto'],
+ ['*','society|Catholic Reformation (Counter-Reformation)','society|Jesuits (Society of Jesus)','society|Ignatius of Loyola','society|Papal reforms','society|Council of Trent (1545–1563)','society|Teresa of Ávila'],
+ ['*','society|Jesuits (Society of Jesus)','society|Ignatius of Loyola'],
+ ['*','society|Council of Trent (1545–1563)','roots|Indulgence','roots|Selling of indulgences'],
+ ['*','roots|Heretic','luther|Excommunication','england|Mary I (“Bloody Mary”)']
+];
+const tableHtml = key=>{const t=TABLES[key]; return t?`<div class="scroll"><table class="compare"><thead><tr>${t.head.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${t.rows().map(r=>`<tr>${r.map((v,i)=>i?`<td>${esc(v)}</td>`:`<td><b>${esc(v)}</b></td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''};
+
+const deckById = Object.fromEntries(DECKS.map(d=>[d.id,d]));
+const store = {
+  get(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+const S = {
+  tab: store.get('h10-tab2','learn'),
+  li: store.get('h10-li',0), done: store.get('h10-done',[]), miss: store.get('h10-miss',{}), L:null, showMap:false,
+  deck: store.get('h10-deck','all'),
+  known: store.get('h10-known',{}),
+  fc:null, quiz:null, fcFront: store.get('h10-front','term')
+};
+// Settings live under their own key so they never touch saved progress.
+const DEF_SET = {theme:'auto', size:'m', hooks:true, includeOpt:false, fcPool:'unknown', fcOrder:'shuffle', quizMix:'mixed', quizDir:'mixed', quizFocus:'unknown', timer:0};
+S.set = Object.assign({}, DEF_SET, store.get('h10-settings',{}));
+const saveSet = ()=>store.set('h10-settings',S.set);
+function applySet(){
+  const r=document.documentElement;
+  if(S.set.theme==='auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme',S.set.theme);
+  r.style.fontSize={s:'14px',m:'16px',l:'18px',xl:'20px'}[S.set.size]||'16px';
+}
+applySet();
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const inAll = d=>S.set.includeOpt||!deckById[d].opt;
+const deckIn = (d,sel=S.deck)=>sel==='all'?inAll(d):unitById[sel]?deckById[d].unit===sel&&inAll(d):d===sel;
+const inDeck = c=>deckIn(c.d);
+const scopeName = sel=>sel==='all'?'all decks':unitById[sel]?unitById[sel].name:deckById[sel].name;
+const hookHtml = c=>c.h&&S.set.hooks?`<span class="hook">Memory hook: ${esc(c.h)}</span>`:'';
+const CORE_CARDS = CARDS.filter(c=>!deckById[c.d].opt);
+const cardsNow = ()=>CARDS.filter(inDeck);
+const dotStyle = d=>`background:var(--d-${d})`;
+
+function setKnown(id,v){S.known[id]=v; if(!v) delete S.known[id]; store.set('h10-known',S.known); renderMeter(); renderChips();}
+
+function renderMeter(){
+  const n = CORE_CARDS.filter(c=>S.known[c.id]).length;
+  $('#mcount').textContent=n; $('#mtotal').textContent=CORE_CARDS.length;
+  $('#mbar').style.width=(100*n/CORE_CARDS.length)+'%';
+}
+function renderChips(){
+  const opts=[{id:'all',name:'All decks'}].concat(UNITS.flatMap(u=>[u].concat(DECK_VIEW.filter(d=>d.unit===u.id))));
+  $('#chips').innerHTML = opts.map(d=>{
+    const cs = CARDS.filter(c=>deckIn(c.d,d.id)), unit=!!unitById[d.id];
+    const k = cs.filter(c=>S.known[c.id]).length;
+    return `<button class="chip${unit?' unit':''}" data-deck="${d.id}" aria-pressed="${S.deck===d.id}">${d.id!=='all'&&!unit?`<span class="dot" style="${dotStyle(d.id)}"></span>`:''}${esc(d.name)} <small>${k}/${cs.length}</small></button>`;
+  }).join('');
+}
+function renderTabs(){document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===S.tab))}
+
+/* ---------- Guide ---------- */
+function renderGuide(){
+  const decks = DECK_VIEW.filter(d=>deckIn(d.id));
+  $('#view').innerHTML = decks.map((d,i)=>{
+    const uh = (i===0||decks[i-1].unit!==d.unit)&&new Set(decks.map(x=>x.unit)).size>1?`<h2 class="unit-head">${esc(unitById[d.unit].name)}</h2>`:'';
+    const cs = CARDS.filter(c=>c.d===d.id);
+    const secs = [...new Set(cs.map(c=>c.s))];
+    let h = uh+`<section class="deck" id="deck-${d.id}"><div class="deck-head"><span class="dot" style="${dotStyle(d.id)}"></span><h2>${esc(d.name)}</h2><span class="label">${cs.filter(c=>S.known[c.id]).length} of ${cs.length} known</span></div><p class="deck-sub">${esc(d.sub)}</p>`;
+    (CHAINS[d.id]||[]).forEach(ch=>{h+=`<div class="chain"><div class="label">${esc(ch.label)} · in order</div><ol>${ch.steps.map(s=>`<li><span>${esc(s)}</span></li>`).join('')}</ol></div>`});
+    if(d.id==='ns') h+=`<div class="chain"><div class="label">How the nervous system divides</div><div class="tree">${esc(TREE)}</div></div>`;
+    secs.forEach(s=>{
+      h+=`<h3 class="sec">${esc(s)}</h3><div class="rows">`+cs.filter(c=>c.s===s).map(c=>`<div class="row"><div class="t">${esc(c.t)}</div><div class="x">${esc(c.x)}${hookHtml(c)}</div><button class="know" data-know="${c.id}" aria-pressed="${!!S.known[c.id]}">${S.known[c.id]?'✓ Got it':'Got it?'}</button></div>`).join('')+`</div>`;
+      h+=tableHtml(d.id+'|'+s);
+    });
+    (WATCH[d.id]||[]).forEach(w=>h+=`<div class="watch"><b>Heads up</b>${esc(w)}</div>`);
+    return h+`</section>`;
+  }).join('');
+}
+
+/* ---------- Flashcards ---------- */
+function buildQueue(){
+  let cs = cardsNow();
+  if(S.set.fcPool==='unknown'){const u=cs.filter(c=>!S.known[c.id]); if(u.length) cs=u;}
+  else if(S.set.fcPool==='weak') cs=cs.filter(c=>S.miss[c.id]);
+  S.fc = {q:(S.set.fcOrder==='shuffle'?shuffle(cs):cs).map(c=>c.id), i:0, flipped:false, seen:0, total:cs.length};
+}
+const POOL_NAME = {unknown:'cards you don\'t know yet', all:'all cards', weak:'trouble terms (ones you\'ve missed)'};
+const POOL_NEXT = {unknown:'all', all:'weak', weak:'unknown'};
+function renderCards(){
+  if(!S.fc) buildQueue();
+  const f=S.fc;
+  const top = `<div class="fc-top"><span class="label">${f.q.length?`${Math.min(f.seen+1,f.total)} / ${f.total}`:''} · ${POOL_NAME[S.set.fcPool]}</span>
+    <div class="toggle">
+      <button class="btn small" data-act="front" aria-pressed="${S.fcFront==='def'}">${S.fcFront==='term'?'Show definition first':'Show term first'}</button>
+      <button class="btn small" data-act="only">Switch to: ${POOL_NAME[POOL_NEXT[S.set.fcPool]].replace(/ \(.*\)/,'')}</button>
+      <button class="btn small" data-act="shuffle">${S.set.fcOrder==='shuffle'?'Shuffle':'Restart'}</button>
+    </div></div>`;
+  if(!f.q.length){
+    if(S.set.fcPool==='weak'&&!f.total){$('#view').innerHTML=top+`<div class="done"><h2>No trouble terms yet.</h2><p class="deck-sub" style="margin:10px auto 18px">Terms you miss in Learn lessons show up here. Nothing in this set so far.</p><div class="toggle" style="justify-content:center"><button class="btn primary" data-act="pool-all">Study all cards instead</button></div></div>`;return}
+    const all = cardsNow().every(c=>S.known[c.id]);
+    $('#view').innerHTML = top+`<div class="done"><h2>${all?'You know every card in this set.':'Round done.'}</h2><p class="deck-sub" style="margin:10px auto 18px">${all?'Test yourself with the quiz, or include known cards to review again.':'Cards you marked “still learning” will come back in the next round.'}</p><div class="toggle" style="justify-content:center"><button class="btn primary" data-act="again">Start another round</button><button class="btn" data-goto="quiz">Take a quiz</button></div></div>`;
+    return;
+  }
+  const c = CARDS.find(x=>x.id===f.q[f.i]);
+  const termSide = `<div class="big">${esc(c.t)}</div>`;
+  const hideTerm = S.fcFront==='def'&&!f.flipped;
+  const defSide = `<div class="def">${esc(hideTerm?maskDef(c):c.x)}${hideTerm?'':hookHtml(c)}</div>`;
+  const showTerm = (S.fcFront==='term') !== f.flipped;
+  $('#view').innerHTML = top+`
+    <button class="card" data-act="flip" aria-label="Flip card">
+      <span class="corner"><span class="dot" style="${dotStyle(c.d)}"></span><span class="label">${esc(deckById[c.d].name)} · ${esc(c.s)}</span></span>
+      <div class="face">${showTerm?termSide:defSide}${f.flipped?`<div style="margin-top:14px" class="label">${showTerm?'':esc(c.t)}</div>`:''}</div>
+      <span class="flipnote">${f.flipped?'':'Tap to flip'}</span>
+    </button>
+    <div class="fc-actions">
+      <button class="btn bad" data-act="learning">Still learning</button>
+      <button class="btn good" data-act="got">Got it</button>
+    </div>
+    <div class="kbd">Keyboard: Space = flip · 1 = still learning · 2 = got it</div>`;
+}
+function fcAnswer(got){
+  const f=S.fc, id=f.q[f.i];
+  setKnown(id,got);
+  f.q.splice(f.i,1); f.seen++;
+  if(!got){ f.q.splice(Math.min(f.q.length,4),0,id); f.total++; }
+  f.flipped=false; if(f.i>=f.q.length) f.i=0;
+  renderCards();
+}
+
+/* ---------- Quiz ---------- */
+/* Distractor safety: never offer a wrong answer that is about the same thing as the right one
+   (a disorder and its symptoms, a term and a card that names it, near-identical definitions). */
+const STOP=new Set('the a an and or of to in on for with by is are be as at it its that this from your you can when which who their they them not no than more most like such'.split(' '));
+function aliases(t, full){
+  t=t.toLowerCase(); const out=new Set();
+  (t.match(/\(([^)]+)\)/g)||[]).forEach(m=>out.add(m.slice(1,-1).trim()));
+  let core=t.replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim().replace(/^(symptoms|signs|causes?|results|health risks|other) of /,'').replace(/^(the|other) /,'');
+  out.add(core); if(!full) core.split(/:| vs\.? | and /).forEach(x=>out.add(x.trim()));
+  // drop a plural s so "Bipolar disorders" also matches "bipolar disorder"
+  return [...out].map(x=>x.replace(/^(symptoms|signs|causes?) of /,'').trim().replace(/([^si])s$/,'$1')).filter(x=>x.length>=3&&!STOP.has(x));
+}
+const hasWord=(hay,w)=>new RegExp('(^|[^a-z0-9])'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(s|es)?([^a-z0-9]|$)').test(hay);
+const CARD_INFO=new Map();
+const info=c=>{let v=CARD_INFO.get(c.id); if(!v){v={main:aliases(c.t,true),t:c.t.toLowerCase(),x:c.x.toLowerCase()}; CARD_INFO.set(c.id,v)} return v};
+// A card whose definition names 3+ other cards in its deck is a summary/list card.
+const listed=c=>{const I=info(c); if(I.list===undefined) I.list=CARDS.filter(o=>o.d===c.d&&o.id!==c.id&&info(o).main.some(w=>hasWord(I.x,w)));return I.list};
+const PAIR_KEYS=new Set();
+function related(a,b){
+  if(a.id===b.id) return true;
+  const ka=a.d+'|'+a.t, kb=b.d+'|'+b.t;
+  if(PAIRS.has(ka+'~'+kb)) return true;
+  // Same approach across topics ("Psychodynamic perspective" / "Psychodynamic explanation")
+  const fa=a.t.toLowerCase().split(/[\s&]/)[0], fb=b.t.toLowerCase().split(/[\s&]/)[0];
+  if(fa===fb&&APPROACH.has(fa)&&a.d!==b.d) return true;
+  const A=info(a), B=info(b);
+  // one card is about the other: its full name is inside the other's name ("GAD" / "Symptoms of GAD")
+  const general=GENERAL.has(ka)!==GENERAL.has(kb);
+  if(!general&&(A.main.some(w=>hasWord(B.t,w))||B.main.some(w=>hasWord(A.t,w)))) return true;
+  // a list card and one of the things it lists
+  const la=listed(a), lb=listed(b);
+  return (la.length>=3&&la.includes(b))||(lb.length>=3&&lb.includes(a));
+}
+const PAIRS=new Set();
+UMBRELLA.forEach(k=>{const d=k.split('|')[0]; PAIR_KEYS.add(k); ALL_CARDS.filter(c=>c.d===d).forEach(c=>{const o=c.d+'|'+c.t; if(o!==k){PAIRS.add(k+'~'+o);PAIRS.add(o+'~'+k)}})});
+PAIR_GROUPS.forEach(g=>{const hub=g[0]==='*'?null:g[0], rest=g.slice(1), all=hub?[hub,...rest]:rest;
+  const add=(x,y)=>{PAIRS.add(x+'~'+y);PAIRS.add(y+'~'+x)};
+  if(hub) rest.forEach(m=>add(hub,m)); else rest.forEach((x,i)=>rest.slice(i+1).forEach(y=>add(x,y)));
+  all.forEach(k=>PAIR_KEYS.add(k));});
+function safeDistractors(c, ordered, n){
+  const out=[], seen=new Set([c.id]);
+  for(const x of ordered){ if(out.length>=n) break; if(seen.has(x.id)) continue; seen.add(x.id);
+    if(related(c,x)||out.some(y=>related(x,y))) continue; out.push(x); }
+  return out;
+}
+// Hide a card's own term inside its definition so the definition can't give the answer away.
+function maskDef(c){
+  let x=c.x; const al=new Set(info(c).main);
+  // also the words of a multi-word term on their own when they're distinctive ("Stroop", "Hawthorne", "Weber's")
+  c.t.replace(/\([^)]*\)/g,' ').split(/[\s:\/,]+/).forEach(w=>{w=w.toLowerCase().replace(/[^a-z0-9'-]/g,''); if(w.length>=4&&!STOP.has(w)&&!COMMON.has(w)){const b=w.replace(/([^si])s$/,'$1'); al.add(b); if(/ance$|ence$/.test(b)) al.add(b.slice(0,-2)+'t');}});
+  [...al].sort((a,b)=>b.length-a.length).forEach(w=>{
+    x=x.replace(new RegExp('(^|[^A-Za-z0-9])('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(s|es|ly)?(?=[^A-Za-z0-9]|$)','gi'),'$1___');
+  });
+  return x;
+}
+const COMMON=new Set('church catholic reformation protestant faith bible king queen pope peace war disorder disorders symptoms causes cause theory effect system nervous therapy therapies personality depressive episode stage behavioral cognitive biological social cultural genetic sleep sensory motor visual field right left primary cortex lobe cells sense hearing threshold processing perception research sample group variable correlation positive negative explanation perspective example examples criteria medications model analysis left right body when does good cons fear mean cell sign signs cues area scan role time skip their what with whole'.split(' '));
+function genQuestion(c, pool, nOpts){
+  pool = (pool||cardsNow()).filter(x=>x.id!==c.id); nOpts = nOpts||4;
+  const same = shuffle(pool.filter(x=>x.d===c.d&&x.s===c.s));
+  const deck = shuffle(pool.filter(x=>x.d===c.d&&x.s!==c.s));
+  const rest = shuffle(pool.filter(x=>x.d!==c.d)).concat(shuffle(CARDS.filter(x=>x.d!==c.d&&inAll(x.d))));
+  const distract = safeDistractors(c, same.concat(deck,rest), nOpts-1);
+  const dir = S.set.quizDir, reverse = dir==='term'?true:dir==='def'?false:Math.random()<0.3;
+  const all = shuffle([c].concat(distract));
+  return reverse
+    ? {kind:'card', type:'mc', card:c, ask:'Which definition matches this term?', prompt:c.t, opts:all.map(maskDef), ans:all.indexOf(c), exp:`${c.t}: ${c.x}`}
+    : {kind:'card', type:'mc', card:c, ask:'Which term matches this definition?', prompt:maskDef(c), opts:all.map(x=>x.t), ans:all.indexOf(c), exp:`${c.t}: ${c.x}`+(c.h&&S.set.hooks?` (Hook: ${c.h})`:'')};
+}
+// True/false: half the time the definition shown belongs to a different, nearby term.
+function tfQuestion(c, pool){
+  let shown=c;
+  if(Math.random()<0.5){
+    const near=shuffle(pool.filter(x=>x.id!==c.id&&x.d===c.d&&x.s===c.s)).concat(shuffle(pool.filter(x=>x.id!==c.id&&x.d===c.d)),shuffle(pool.filter(x=>x.id!==c.id)));
+    shown=near.find(x=>x.x!==c.x&&!related(c,x))||c;
+  }
+  return {kind:'card', type:'tf', card:c, ask:'True or false?', prompt:`${c.t}: ${maskDef(shown)}`, opts:['True','False'], ans:shown===c?0:1,
+    exp:shown===c?`True. ${c.t}: ${c.x}`:`False. That describes ${shown.t}. ${c.t}: ${c.x}`};
+}
+function scenQuestion(s){
+  const o=shuffle(s[2].map((t,i)=>({t,i})));
+  return {kind:'scen', type:'scen', deck:s[0], ask:'Apply it', prompt:s[1], opts:o.map(x=>x.t), ans:o.findIndex(x=>x.i===s[3]), exp:s[4]};
+}
+function examQuestion(e){
+  const o=shuffle(e[2].map((t,i)=>({t,i})));
+  return {kind:'scen', type:'exam', deck:e[0], ask:'Choose the best answer', prompt:e[1], opts:o.map(x=>x.t), ans:o.findIndex(x=>x.i===e[3]), exp:e[4]};
+}
+const TYPE_NAME={exam:'Exam-style',mc:'Multiple choice',tf:'True / false',scen:'Scenarios'};
+function newQuiz(qs, extra){
+  S.quizNote='';
+  S.quiz=Object.assign({qs,i:0,picked:null,right:0,missed:[],res:[],n:qs.length,answers:[]},extra||{});
+  renderQuiz();
+}
+function startQuiz(n, onlyIds){
+  let cs = onlyIds?CARDS.filter(c=>onlyIds.includes(c.id)):cardsNow();
+  let sc = onlyIds?[]:SCEN.filter(s=>deckIn(s[0]));
+  const mix = S.set.quizMix, focus = S.set.quizFocus;
+  if(!onlyIds&&focus==='weak'){ cs=cs.filter(c=>S.miss[c.id]); if(mix!=='scen') sc=[]; }
+  const nS = onlyIds||mix==='terms'?0:Math.min(sc.length, mix==='scen'?n:Math.round(n*0.4));
+  const order = focus==='random'?shuffle(cs):shuffle(cs.filter(c=>!S.known[c.id])).concat(shuffle(cs.filter(c=>S.known[c.id])));
+  const nC = onlyIds?cs.length:mix==='scen'?0:Math.min(order.length, n-nS);
+  const qs = shuffle(shuffle(sc).slice(0,nS).map(scenQuestion).concat(order.slice(0,nC).map(c=>genQuestion(c))));
+  if(!qs.length){S.quiz=null;S.quizNote=focus==='weak'?'No trouble terms in this set yet. Terms you miss in Learn lessons show up here. Change "Focus" in Settings to quiz everything.':'No questions match your settings for this deck. Try a different question type in Settings.';renderQuiz();return}
+  newQuiz(qs);
+}
+
+/* Custom test builder: its own saved config, separate from progress. */
+const DEF_TEST = {decks:DECKS.filter(d=>!d.opt).map(d=>d.id), exam:10, mc:15, tf:5, scen:5, choices:4, feedback:'end', order:'mixed'};
+S.test = Object.assign({}, DEF_TEST, store.get('h10-test',{}));
+S.test.decks = S.test.decks.filter(id=>deckById[id]);
+const saveTest = ()=>store.set('h10-test',S.test);
+const testPool = (decks=S.test.decks)=>({cards:CARDS.filter(c=>decks.includes(c.d)), scen:SCEN.filter(s=>decks.includes(s[0])), exam:EXAM.filter(e=>decks.includes(e[0]))});
+function syncTestInputs(){
+  [['exam','texam'],['mc','tmc'],['tf','ttf'],['scen','tscen']].forEach(([k,id])=>{const el=$('#'+id); if(el) S.test[k]=Math.max(0,Math.min(200,parseInt(el.value,10)||0));});
+  saveTest();
+}
+// cfg is passed for Exam mode and "same settings" reruns; otherwise use the builder's saved config.
+function startTest(cfg){
+  if(!cfg) syncTestInputs();
+  const T=Object.assign({}, cfg||S.test), P=testPool(T.decks);
+  const mcN=Math.min(T.mc,P.cards.length), scN=Math.min(T.scen,P.scen.length), exN=Math.min(T.exam||0,P.exam.length);
+  // Use different terms for multiple choice and true/false when there are enough to go around.
+  const deal=shuffle(P.cards), mcCards=deal.slice(0,mcN), left=deal.slice(mcN);
+  const tfCards=left.concat(shuffle(mcCards)).slice(0,Math.min(T.tf,P.cards.length));
+  const groups={mc:mcCards.map(c=>genQuestion(c,P.cards,T.choices)), tf:tfCards.map(c=>tfQuestion(c,P.cards)), scen:shuffle(P.scen).slice(0,scN).map(scenQuestion), exam:shuffle(P.exam).slice(0,exN).map(examQuestion)};
+  const qs=T.order==='grouped'?groups.exam.concat(groups.mc,groups.tf,groups.scen):shuffle(groups.exam.concat(groups.mc,groups.tf,groups.scen));
+  if(!qs.length){S.quiz=null;S.quizNote=!T.decks.length?'Pick at least one topic for your test.':'Your test has 0 questions. Set at least one question count above 0.';renderQuiz();return}
+  const short=!T.examMode&&((T.exam||0)>exN||T.mc>mcN||T.scen>scN||T.tf>tfCards.length)?`Some counts were higher than these topics have, so the test uses all available: ${exN} exam-style, ${mcN} multiple choice, ${tfCards.length} true/false, ${scN} scenario.`:'';
+  newQuiz(qs,{test:true, atEnd:T.feedback==='end', short, decks:T.decks.slice(), cfg:T});
+}
+function gradeTest(){
+  const Q=S.quiz;
+  Q.qs.forEach((q,i)=>{const a=Q.answers[i]; recordAnswer(q, a===undefined?null:a);});
+  Q.i=Q.n; renderQuiz();
+}
+function recordAnswer(q, a){
+  const Q=S.quiz, ok=a===q.ans;
+  Q.res.push({q,ok,a});
+  if(ok) Q.right++; else { Q.missed.push(Object.assign({},q,{yours:a})); if(q.card) setKnown(q.card.id,false); }
+}
+
+let qTimer=null;
+function clearQTimer(){clearInterval(qTimer);qTimer=null}
+// Per question normally; in "answers at the end" mode the same setting becomes a whole-test limit.
+function startQTimer(){
+  const Q=S.quiz, idx=Q.i, whole=Q.atEnd;
+  if(whole){ if(!Q.deadline) Q.deadline=Date.now()+S.set.timer*1000*Q.n; }
+  else if(Q.deadlineFor!==idx){Q.deadlineFor=idx;Q.deadline=Date.now()+S.set.timer*1000}
+  const tick=()=>{
+    if(S.tab!=='quiz'||S.quiz!==Q||Q.i>=Q.n||(!whole&&(Q.i!==idx||Q.picked!==null))){clearQTimer();return}
+    const s=Math.max(0,Math.ceil((Q.deadline-Date.now())/1000)), el=$('#qtime');
+    if(el){el.textContent=whole?`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')} left`:s+'s';el.classList.toggle('low',whole?s<=30:s<=5)}
+    if(s<=0){clearQTimer(); whole?gradeTest():pick(-1)}
+  };
+  tick(); if(S.quiz===Q&&Q.i<Q.n&&(whole||Q.picked===null)) qTimer=setInterval(tick,250);
+}
+const MIX_NAME={mixed:'term and scenario questions',terms:'term questions only',scen:'scenario questions only'};
+const seg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="btn small" data-tset="${k}" data-val="${esc(JSON.stringify(v))}" aria-pressed="${S.test[k]===v}">${esc(l)}</button>`).join('')}</div>`;
+function examCfg(n){
+  const decks=S.test.decks.length?S.test.decks:DEF_TEST.decks, P=testPool(decks);
+  const total=P.exam.length+P.scen.length, take=Math.min(n||total,total), ex=Math.min(P.exam.length,Math.round(take*0.75));
+  return {decks, exam:ex, scen:Math.min(P.scen.length,take-ex), mc:0, tf:0, choices:4, feedback:'end', order:'mixed', examMode:true};
+}
+function renderExamCard(){
+  const decks=S.test.decks.length?S.test.decks:DEF_TEST.decks, P=testPool(decks), total=P.exam.length+P.scen.length;
+  const unitHit=UNITS.find(u=>{const ud=scopeDecks(u.id);return ud.length===decks.length&&ud.every(d=>decks.includes(d))});
+  const names=unitHit?scopeLabel(unitHit.id):decks.length===DECKS.length?'every topic':decks.length===DEF_TEST.decks.length&&DEF_TEST.decks.every(d=>decks.includes(d))?'all main topics':decks.map(d=>deckById[d].name).join(', ');
+  return `<div class="qbox setup" style="margin-bottom:16px;border-color:var(--accent)"><div><div class="label">Exam mode · hardest</div><h2 style="margin-top:6px">Practice exam</h2></div>
+    <p>Questions written like the real unit test: scenarios, "which best describes," and answer choices built to trip you up. Answers are shown at the end, with an explanation of each trap. Covers ${esc(names)} (change topics in Build a test below).</p>
+    <div class="toggle">${[15,30].filter(n=>n<total).map((n,i)=>`<button class="btn ${i?'':'primary'}" data-act="exam" data-n="${n}">${n} questions</button>`).join('')}<button class="btn ${total<=15?'primary':''}" data-act="exam" data-n="0">All ${total}</button></div></div>`;
+}
+function renderBuilder(){
+  const T=S.test, P=testPool();
+  const num=(id,k,max,label)=>`<label class="set-row" for="${id}"><span class="label">${label}</span><span style="display:flex;gap:8px;align-items:center"><input id="${id}" class="qcount" type="number" min="0" max="200" value="${T[k]}" inputmode="numeric"><small style="color:var(--muted)">of ${max}</small></span></label>`;
+  return `<div class="qbox setup" style="margin-top:16px"><div><div class="label">Custom test</div><h2 style="margin-top:6px">Build a test</h2></div>
+    <p>Pick any topics, choose how many of each kind of question, and take it like the real thing. Exam-style questions are hand-written to match the unit test; the other types are built from the flashcards.</p>
+    <div class="set-row"><div class="label">Topics</div>${UNITS.map(u=>`<div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="font-size:.9rem;min-width:4.2em">${esc(u.name)}</b><div class="chips" style="flex:1">${DECK_VIEW.filter(d=>d.unit===u.id).map(d=>`<button class="chip" data-tdeck="${d.id}" aria-pressed="${T.decks.includes(d.id)}"><span class="dot" style="${dotStyle(d.id)}"></span>${esc(d.name)}</button>`).join('')}</div></div>`).join('')}
+      <div class="toggle">${UNITS.map(u=>`<button class="btn small" data-act="t-unit" data-unit="${u.id}">Only ${esc(u.name)}</button>`).join('')}<button class="btn small" data-act="t-core">All main topics</button><button class="btn small" data-act="t-every">Everything</button><button class="btn small" data-act="t-none">Clear</button></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px 26px">${num('texam','exam',P.exam.length,'Exam-style')}${num('tmc','mc',P.cards.length,'Multiple choice')}${num('ttf','tf',P.cards.length,'True / false')}${num('tscen','scen',P.scen.length,'Scenarios')}</div>
+    <div class="set-row"><div class="label">Answer choices (multiple choice)</div>${seg('choices',[[3,'3'],[4,'4'],[5,'5']])}<p>Scenario questions always have 4.</p></div>
+    <div class="set-row"><div class="label">Show answers</div>${seg('feedback',[['end','At the end, like a real test'],['each','After each question']])}${T.feedback==='end'?'<p>You can go back and change answers before you finish.</p>':''}</div>
+    <div class="set-row"><div class="label">Question order</div>${seg('order',[['mixed','Mixed'],['grouped','Grouped by type']])}</div>
+    <div class="set-row"><div class="label">Time limit</div><p>${S.set.timer?(T.feedback==='end'?`${S.set.timer}s per question, added up into one limit for the whole test.`:`${S.set.timer}s per question.`):'Off.'} <button class="btn small" data-tab="settings">Change in Settings</button></p></div>
+    <div><button class="btn primary" data-act="t-start">Start test</button></div></div>`;
+}
+function renderQuiz(){
+  clearQTimer();
+  $('#chips').hidden=!!(S.quiz&&S.quiz.test);
+  const Q=S.quiz;
+  if(!Q){
+    const scope = scopeName(S.deck);
+    const last = store.get('h10-qcount',15);
+    $('#view').innerHTML=`${scopePicker('quiz')}${S.quizNote?`<div class="watch" style="margin:0 0 14px"><b>Nothing to quiz</b>${esc(S.quizNote)}</div>`:''}${renderExamCard()}<div class="qbox setup"><div><div class="label">Quick quiz · ${esc(scope)}</div><h2 style="margin-top:6px">Test yourself</h2></div>
+      <p>Each round mixes term questions (pulled first from cards you haven't marked “got it”) with scenario questions like the ones on the unit test. Anything you miss gets flagged so it comes back in flashcards.</p>
+      <div class="toggle"><button class="btn primary" data-quiz="10">10 questions</button><button class="btn" data-quiz="20">20 questions</button><button class="btn" data-quiz="40">40 questions</button></div>
+      <div class="toggle" style="align-items:center"><label for="qcount" style="color:var(--muted)">Custom:</label><input id="qcount" class="qcount" type="number" min="1" max="200" value="${+last||15}" inputmode="numeric"><button class="btn" data-act="customquiz">Start</button></div>
+      <p style="font-size:.88rem">Current settings: ${esc(MIX_NAME[S.set.quizMix])}${S.set.quizFocus==='weak'?', trouble terms only':S.set.quizFocus==='random'?', random order':''}${S.set.timer?`, ${S.set.timer}s per question`:''}. <button class="btn small" data-tab="settings">Change in Settings</button></p>
+      <p style="font-size:.88rem">Change the deck with the chips above to quiz one topic at a time.</p></div>${renderBuilder()}`;
+    return;
+  }
+  if(Q.i>=Q.qs.length){
+    const pct=Q.n?Math.round(100*Q.right/Q.n):0;
+    const missedCards=[...new Set(Q.missed.filter(m=>m.card).map(m=>m.card.id))];
+    const tally=key=>{const m={};Q.res.forEach(r=>{const k=key(r.q);m[k]=m[k]||[0,0];m[k][1]++;if(r.ok)m[k][0]++});return m};
+    const byType=tally(q=>q.type), byDeck=tally(q=>q.card?q.card.d:q.deck);
+    const rows=(m,name)=>Object.entries(m).map(([k,[r,t]])=>`<tr><td>${esc(name(k))}</td><td>${r}/${t}</td><td>${Math.round(100*r/t)}%</td></tr>`).join('');
+    const breakdown=Q.test?`<div class="scroll" style="text-align:left"><table class="compare" style="min-width:0"><thead><tr><th>By question type</th><th>Score</th><th></th></tr></thead><tbody>${rows(byType,k=>TYPE_NAME[k])}</tbody><thead><tr><th>By topic</th><th>Score</th><th></th></tr></thead><tbody>${rows(byDeck,k=>deckById[k].name)}</tbody></table></div>`:'';
+    const yours=m=>m.yours===null||m.yours===undefined?'No answer':m.yours===-1?'Ran out of time':m.opts[m.yours];
+    $('#view').innerHTML=`<div class="qbox" style="text-align:center"><div class="label">${Q.test?'Test complete':'Round complete'}</div><div class="score">${Q.right}/${Q.n}</div><p class="deck-sub" style="margin:0 auto 16px">${pct}% · ${pct>=90?'Excellent. You\'re test-ready on this set.':pct>=70?'Solid. Review the misses below and run it again.':'Keep going: flip through the flashcards for these topics, then try again.'}</p>
+      ${Q.short?`<div class="watch" style="text-align:left;margin:0 0 14px">${esc(Q.short)}</div>`:''}
+      <div class="toggle" style="justify-content:center">${missedCards.length?`<button class="btn primary" data-act="retry">Retry the ${missedCards.length} missed terms</button>`:''}${Q.test?`<button class="btn" data-act="t-again">Same settings, new test</button>`:''}<button class="btn" data-act="newquiz">${Q.test?'Change test':'New round'}</button><button class="btn" data-goto="cards">Go to flashcards</button></div>
+      ${breakdown}
+      ${Q.missed.length?`<div class="missed">${Q.missed.map(m=>`<div><b>${esc(m.prompt.length>140?m.prompt.slice(0,140)+'…':m.prompt)}</b><br>Your answer: ${esc(yours(m))} · Correct: ${esc(m.opts[m.ans])}${m.type==='mc'?'':`<br>${esc(m.exp)}`}</div>`).join('')}</div>`:''}</div>`;
+    S.retryIds=missedCards; return;
+  }
+  const q=Q.qs[Q.i], d=q.card?q.card.d:q.deck;
+  const atEnd=!!Q.atEnd, sel=Q.answers[Q.i];
+  const answered = !atEnd&&Q.picked!==null;
+  const timerOn = S.set.timer&&(atEnd||!answered);
+  const answeredCount=Q.answers.filter(a=>a!==undefined).length;
+  $('#view').innerHTML=`<div class="qbox">
+    <div class="qmeta"><span class="label">Question ${Q.i+1} of ${Q.n}${q.type?` · ${TYPE_NAME[q.type]}`:''}${timerOn?` · <span class="timer" id="qtime" aria-live="off"></span>`:''}</span><span class="label"><span class="dot" style="display:inline-block;margin-right:6px;${dotStyle(d)}"></span>${esc(deckById[d].name)}${atEnd?` · ${answeredCount} answered`:` · Score ${Q.right}`}</span></div>
+    <p class="qprompt"><span class="ask">${esc(q.ask)}</span>${esc(q.prompt)}</p>
+    <div class="opts">${q.opts.map((o,i)=>`<button class="opt ${answered&&i===q.ans?'right':''} ${answered&&i===Q.picked&&i!==q.ans?'wrong':''} ${atEnd&&i===sel?'sel':''}" data-opt="${i}" ${answered?'disabled':''} ${atEnd?`aria-pressed="${i===sel}"`:''}><span class="k">${'ABCDE'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>
+    ${answered?`<div class="explain"><b class="${Q.picked===q.ans?'ok':'no'}">${Q.picked===q.ans?'Correct.':Q.picked===-1?'Time\'s up.':'Not quite.'}</b> ${esc(q.exp)}</div><div class="qnav"><button class="btn primary" data-act="next">${Q.i+1<Q.n?'Next question':'See results'}</button></div>`:''}
+    ${atEnd?`<div class="qnav" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><button class="btn" data-act="t-back" ${Q.i?'':'disabled'}>Back</button><span style="display:flex;gap:8px;flex-wrap:wrap">${Q.i+1<Q.n?`<button class="btn" data-act="t-finish">Finish early</button><button class="btn primary" data-act="t-next">${sel===undefined?'Skip':'Next'}</button>`:`<button class="btn primary" data-act="t-finish">Finish and grade</button>`}</span></div>`:''}
+  </div><div class="kbd">Keyboard: ${'ABCDE'.slice(0,q.opts.length).split('').join('/')} or 1–${q.opts.length} to answer · Enter = next${atEnd?' · ← = back':''}</div>`;
+  if(timerOn) startQTimer();
+}
+function pick(i){
+  const Q=S.quiz; if(!Q||Q.i>=Q.n) return;
+  const q=Q.qs[Q.i];
+  if(i!==-1&&(i<0||i>=q.opts.length)) return;
+  if(Q.atEnd){ if(i===-1) return; Q.answers[Q.i]=i; renderQuiz(); return; }
+  if(Q.picked!==null) return;
+  Q.picked=i; recordAnswer(q,i);
+  renderQuiz();
+}
+function testNav(step){
+  const Q=S.quiz; if(!Q||!Q.atEnd) return;
+  const to=Q.i+step; if(to<0) return;
+  if(to>=Q.n){ finishTest(); return; }
+  Q.i=to; renderQuiz(); window.scrollTo({top:0});
+}
+function finishTest(){
+  const Q=S.quiz, blank=Q.n-Q.answers.filter(a=>a!==undefined).length;
+  if(blank&&!confirm(`You left ${blank} question${blank>1?'s':''} blank. Finish and grade anyway?`)) return;
+  gradeTest(); window.scrollTo({top:0});
+}
+
+/* ---------- Learn (guided lessons) ---------- */
+const LESSONS=[];
+DECKS.forEach(d=>{
+  const cs=ALL_CARDS.filter(c=>c.d===d.id);
+  [...new Set(cs.map(c=>c.s))].forEach(s=>{
+    const sc=cs.filter(c=>c.s===s), n=Math.ceil(sc.length/5), size=Math.ceil(sc.length/n), start=LESSONS.length;
+    for(let k=0;k<n;k++){const ids=sc.slice(k*size,(k+1)*size).filter(c=>!HIDDEN.has(c.d+'|'+c.t)).map(c=>c.id); LESSONS.push({d:d.id,s,part:'',ids,skip:!ids.length})}
+    const live=LESSONS.slice(start).filter(l=>!l.skip);
+    if(live.length>1) live.forEach((l,k)=>l.part=`part ${k+1} of ${live.length}`);
+  });
+  LESSONS[LESSONS.length-1].checkpoint=true;
+});
+// Optional lessons come after every core lesson, so saved lesson numbers stay the same.
+const CORE_LESSONS=DECK_VIEW.filter(d=>!d.opt).flatMap(d=>LESSONS.map((l,i)=>i).filter(i=>LESSONS[i].d===d.id&&!LESSONS[i].skip)), LAST_CORE=CORE_LESSONS[CORE_LESSONS.length-1];
+if(S.li>=LESSONS.length) S.li=0;
+while(LESSONS[S.li].skip) S.li=(S.li+1)%LESSONS.length;
+const cardById=id=>CARDS.find(c=>c.id===id);
+
+function learnQ(item, lesson){
+  if(item.type==='scen'){
+    const s=SCEN[item.idx], o=shuffle(s[2].map((t,i)=>({t,i})));
+    return {item,deck:s[0],ask:'Checkpoint · apply it',prompt:s[1],opts:o.map(x=>x.t),ans:o.findIndex(x=>x.i===s[3]),exp:s[4]};
+  }
+  const c=cardById(item.id);
+  const pick=(arr)=>shuffle(arr.filter(x=>x.id!==c.id));
+  const near=pick(lesson.ids.map(cardById)), sec=pick(CARDS.filter(x=>x.d===c.d&&x.s===c.s)), deck=pick(CARDS.filter(x=>x.d===c.d)), rest=pick(CARDS.filter(x=>x.d!==c.d&&deckById[x.d].unit===deckById[c.d].unit));
+  const any=pick(CARDS.filter(x=>x.d!==c.d&&!deckById[x.d].opt));
+  const distract=safeDistractors(c, near.concat(sec,deck,rest,any), 3);
+  const all=shuffle([c].concat(distract)), reverse=Math.random()<0.35;
+  return {item,card:c,deck:c.d,ask:(item.review?'Review from earlier · ':'')+(reverse?'Which definition matches this term?':'Which term matches this definition?'),
+    prompt:reverse?c.t:maskDef(c), opts:all.map(x=>reverse?maskDef(x):x.t), ans:all.indexOf(c)};
+}
+function startLesson(li){S.li=li;store.set('h10-li',li);S.L={phase:'teach'};S.showMap=false;renderLearn();window.scrollTo({top:0})}
+function beginLessonQuiz(){
+  const lesson=LESSONS[S.li];
+  const doneIds=S.done.filter(i=>i!==S.li).flatMap(i=>LESSONS[i].ids);
+  const weak=shuffle(doneIds.filter(id=>S.miss[id])), other=shuffle(doneIds.filter(id=>!S.miss[id]));
+  const reviews=weak.concat(other).slice(0,Math.min(3,doneIds.length)).map(id=>({type:'card',id,review:true}));
+  let q=shuffle(lesson.ids.map(id=>({type:'card',id})));
+  reviews.forEach(r=>q.splice(1+Math.floor(Math.random()*q.length),0,r));
+  if(lesson.checkpoint) q=q.concat(shuffle(SCEN.map((s,i)=>({type:'scen',idx:i})).filter(x=>SCEN[x.idx][0]===lesson.d)).slice(0,6));
+  S.L={phase:'quiz',queue:q,cur:null,picked:null,asked:0,first:0,firstTotal:q.length,missedIds:new Set(),scenMiss:[],tried:new Set()};
+  nextLearnQ();
+}
+function nextLearnQ(){
+  const L=S.L;
+  if(!L.queue.length){finishLesson();return}
+  const item=L.queue.shift(); L.cur=learnQ(item,LESSONS[S.li]); L.picked=null; renderLearn();
+}
+function learnPick(i){
+  const L=S.L; if(!L||L.phase!=='quiz'||L.picked!==null) return;
+  L.picked=i; const q=L.cur, ok=i===q.ans, key=q.item.type==='scen'?'s'+q.item.idx:q.item.id;
+  const firstTime=!L.tried.has(key); L.tried.add(key);
+  if(ok&&firstTime) L.first++;
+  if(q.card){
+    if(ok){ if(!L.missedIds.has(q.card.id)) setKnown(q.card.id,true); }
+    else{
+      L.missedIds.add(q.card.id); S.miss[q.card.id]=(S.miss[q.card.id]||0)+1; store.set('h10-miss',S.miss); setKnown(q.card.id,false);
+      L.queue.splice(Math.min(L.queue.length,2),0,{...q.item});
+    }
+  } else if(!ok) L.scenMiss.push(q);
+  if(ok&&q.card&&S.miss[q.card.id]&&!L.missedIds.has(q.card.id)){S.miss[q.card.id]--;store.set('h10-miss',S.miss)}
+  renderLearn();
+}
+function finishLesson(){
+  if(!S.done.includes(S.li)){S.done.push(S.li);store.set('h10-done',S.done)}
+  S.L.phase='summary'; renderLearn();
+}
+function lessonTitle(i){const l=LESSONS[i];return `${l.s}${l.part?` (${l.part})`:''}`}
+/* Study one unit (or everything) with one tap, in Learn and in Quiz. */
+const SCOPES=[{id:'all',name:'Everything'}].concat(UNITS.map(u=>({id:u.id,name:u.id==='u2'?'Perception':u.name})));
+const scopeLabel=id=>(SCOPES.find(x=>x.id===id)||{name:scopeName(id)}).name;
+const scopeLessons=sel=>DECK_VIEW.filter(d=>deckIn(d.id,sel)&&(!d.opt||sel===d.id)).flatMap(d=>LESSONS.map((l,i)=>i).filter(i=>LESSONS[i].d===d.id&&!LESSONS[i].skip));
+const scopeDecks=sel=>DECKS.filter(d=>(sel==='all'||d.unit===sel)&&!d.opt).map(d=>d.id);
+function scopePicker(kind){
+  return `<div class="qbox unitpick"><div class="label">${kind==='learn'?'Learn':'Quizzes &amp; tests on'}</div><div class="seg">${SCOPES.map(x=>{
+    let extra=''; if(kind==='learn'){const ls=scopeLessons(x.id); extra=` <small>${ls.filter(i=>S.done.includes(i)).length}/${ls.length}</small>`;}
+    return `<button class="btn small" data-scope-${kind}="${x.id}" aria-pressed="${S.deck===x.id}">${esc(x.name)}${extra}</button>`;}).join('')}</div></div>`;
+}
+function startScopeLearn(id){
+  S.deck=id; store.set('h10-deck',id); S.fc=null; S.quiz=null;
+  const ls=scopeLessons(id); renderChips(); startLesson(ls.find(i=>!S.done.includes(i))??ls[0]);
+}
+function setQuizScope(id){
+  S.deck=id; store.set('h10-deck',id); S.fc=null; S.quiz=null; S.quizNote='';
+  S.test.decks=scopeDecks(id); saveTest(); renderChips(); renderQuiz();
+}
+function renderLearn(){
+  const lesson=LESSONS[S.li], deck=deckById[lesson.d];
+  if(!S.L) S.L={phase:'teach'};
+  const L=S.L;
+  const coreDone=S.done.filter(i=>CORE_LESSONS.includes(i)).length;
+  const scoped=S.deck!=='all'&&!deck.opt&&scopeLessons(S.deck).includes(S.li), SL=scoped?scopeLessons(S.deck):CORE_LESSONS;
+  const scopeDone=S.done.filter(i=>SL.includes(i)).length, pct=Math.round(100*scopeDone/SL.length);
+  const optLs=LESSONS.map((l,i)=>i).filter(i=>LESSONS[i].d===lesson.d&&!LESSONS[i].skip);
+  let h=scopePicker('learn')+`<div class="qbox" style="margin-bottom:14px;padding:14px 18px">
+    <div class="qmeta" style="margin:0"><span class="label">${deck.opt?`Optional lesson ${optLs.indexOf(S.li)+1} of ${optLs.length}`:`${scoped?esc(scopeLabel(S.deck))+' · ':''}Lesson ${SL.indexOf(S.li)+1} of ${SL.length}`} · ${scoped?scopeDone:coreDone} done</span><button class="btn small" data-act="l-map">${S.showMap?'Hide lesson map':'Lesson map'}</button></div>
+    <div class="bar" style="margin-top:8px" aria-hidden="true"><i style="width:${pct}%"></i></div>
+    ${S.showMap?`<div style="margin-top:12px;display:grid;gap:14px">${DECK_VIEW.map((d,i)=>`${i===0||DECK_VIEW[i-1].unit!==d.unit?`<h3 style="margin-top:${i?8:0}px">${esc(unitById[d.unit].name)}</h3>`:''}<div><div class="label" style="margin-bottom:6px"><span class="dot" style="display:inline-block;margin-right:6px;${dotStyle(d.id)}"></span>${esc(d.name)}</div><div class="chips">${LESSONS.map((l,i)=>l.d===d.id&&!l.skip?`<button class="chip" data-lesson="${i}" aria-pressed="${i===S.li}">${S.done.includes(i)?'✓ ':''}${esc(lessonTitle(i))}</button>`:'').join('')}</div></div>`).join('')}</div>`:''}
+  </div>`;
+  const head=`<div class="deck-head"><span class="dot" style="${dotStyle(lesson.d)}"></span><span class="label">${esc(deck.name)}</span></div><h2 style="margin-bottom:4px">${esc(lessonTitle(S.li))}</h2>`;
+
+  if(L.phase==='teach'){
+    const ch=CHAIN_AT[lesson.d+'|'+lesson.s], chs=lesson.d==='split'&&lesson.s==='Split-brain patients'?CHAINS.split:ch?[ch]:[];
+    h+=`<div class="qbox">${head}${deck.opt?`<div class="watch" style="margin:8px 0 12px"><b>Optional topic</b>${esc(deck.sub)} It doesn't count toward your main progress.</div>`:''}<p class="deck-sub">Read these ${lesson.ids.length} terms. Say each one out loud or cover the definition and try to explain it. Then you'll be quizzed on them one at a time${S.done.length?', with a few review questions from earlier lessons mixed in':''}.</p>`;
+    chs.forEach(ch=>h+=`<div class="chain"><div class="label">${esc(ch.label)} · in order</div><ol>${ch.steps.map(s=>`<li><span>${esc(s)}</span></li>`).join('')}</ol></div>`);
+    if(lesson.d==='ns'&&lesson.s==='Divisions') h+=`<div class="chain"><div class="label">How the nervous system divides</div><div class="tree">${esc(TREE)}</div></div>`;
+    h+=`<div class="rows">${lesson.ids.map(cardById).map(c=>`<div class="row" style="grid-template-columns:minmax(120px,190px) 1fr"><div class="t">${esc(c.t)}</div><div class="x">${esc(c.x)}${hookHtml(c)}</div></div>`).join('')}</div>`;
+    if(LESSONS.filter(l=>l.d===lesson.d&&l.s===lesson.s&&!l.skip).pop()===lesson) h+=tableHtml(lesson.d+'|'+lesson.s);
+    if(lesson.checkpoint) (WATCH[lesson.d]||[]).forEach(w=>h+=`<div class="watch"><b>Heads up</b>${esc(w)}</div>`);
+    if(lesson.checkpoint) h+=`<p class="deck-sub" style="margin-top:14px">This is the last lesson in ${esc(deck.name)}, so the quiz ends with scenario questions on the whole deck.</p>`;
+    h+=`<div class="qnav"><button class="btn primary" data-act="l-quiz">I've read them. Quiz me</button></div></div>`;
+  }
+  else if(L.phase==='quiz'){
+    const q=L.cur, answered=L.picked!==null, ok=L.picked===q.ans;
+    const left=L.queue.length+(answered?0:1);
+    h+=`<div class="qbox"><div class="qmeta"><span class="label">${esc(deck.name)} · ${esc(lessonTitle(S.li))}</span><span class="label">${left} left</span></div>
+      <p class="qprompt"><span class="ask">${esc(q.ask)}</span>${esc(q.prompt)}</p>
+      <div class="opts">${q.opts.map((o,i)=>`<button class="opt ${answered&&i===q.ans?'right':''} ${answered&&i===L.picked&&!ok?'wrong':''}" data-lopt="${i}" ${answered?'disabled':''}><span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>
+      ${answered?`<div class="explain"><b class="${ok?'ok':'no'}">${ok?'Correct.':'Not quite.'}</b> ${q.card?`<b>${esc(q.card.t)}</b>: ${esc(q.card.x)}${hookHtml(q.card)}${!ok?`<div class="label" style="margin-top:8px">This one will come back in a moment</div>`:''}`:esc(q.exp)}</div>
+      <div class="qnav"><button class="btn primary" data-act="l-next">Next</button></div>`:''}
+    </div><div class="kbd">Keyboard: A–D or 1–4 to answer · Enter = next</div>`;
+  }
+  else {
+    const missed=[...L.missedIds].map(cardById), allDone=coreDone===CORE_LESSONS.length;
+    // Next core lesson in study order; optional lessons are offered as a side button, never in the way.
+    const order=scoped?SL:DECK_VIEW.flatMap(d=>LESSONS.map((l,i)=>i).filter(i=>LESSONS[i].d===d.id&&!LESSONS[i].skip)), pos=order.indexOf(S.li);
+    const nextIdx=order.slice(pos+1).find(i=>!deckById[LESSONS[i].d].opt||deck.opt), last=nextIdx===undefined;
+    const optStart=!deck.opt?LESSONS.findIndex(l=>deckById[l.d].opt):-1;
+    const optNext=S.li===LAST_CORE&&optStart>=0?`<button class="btn" data-lesson="${optStart}">Optional: ${esc(deckById[LESSONS[optStart].d].name.replace(/^Optional: /,''))}</button>`:'';
+    h+=`<div class="qbox">${head}<div class="score" style="font-size:2.4rem">${L.first}/${L.firstTotal}</div><p class="deck-sub">right on the first try.${missed.length?' The terms below gave you trouble. They\'ll show up again as review questions in later lessons.':' Clean lesson.'}</p>
+      ${missed.length?`<div class="missed">${missed.map(c=>`<div><b>${esc(c.t)}</b>: ${esc(c.x)}</div>`).join('')}</div>`:''}
+      ${L.scenMiss.length?`<div class="missed" style="margin-top:8px">${L.scenMiss.map(q=>`<div>${esc(q.prompt)} <b>${esc(q.opts[q.ans])}</b>. ${esc(q.exp)}</div>`).join('')}</div>`:''}
+      ${scoped&&last?`<div class="watch" style="margin-top:16px"><b>End of ${esc(scopeLabel(S.deck))}.</b>${scopeDone===SL.length?'You finished every lesson in it. ':`${SL.length-scopeDone} lesson${SL.length-scopeDone>1?'s':''} in it ${SL.length-scopeDone>1?'are':'is'} still unfinished (see the lesson map). `}Test yourself on the whole unit.</div>`:''}
+      ${!scoped&&allDone&&last?`<div class="watch" style="margin-top:16px"><b>You finished every lesson.</b>Now take a 40-question mixed quiz on everything and retry what you miss.</div>`:''}
+      <div class="qnav" style="gap:8px;flex-wrap:wrap"><button class="btn" data-act="l-redo">Redo this lesson</button>${last&&scoped?`<button class="btn" data-act="l-scopeexam">${esc(scopeLabel(S.deck))} practice exam</button><button class="btn primary" data-act="l-scopequiz">Take a ${esc(scopeLabel(S.deck))} quiz</button>`:last?`${optNext}<button class="btn primary" data-act="l-final">Take the final mixed quiz</button>`:`<button class="btn primary" data-lesson="${nextIdx}">Next lesson: ${esc(lessonTitle(nextIdx))}</button>`}</div></div>`;
+  }
+  $('#view').innerHTML=h;
+}
+
+/* ---------- Settings ---------- */
+const SETTINGS = [
+  {g:'Display'},
+  {k:'theme', label:'Theme', opts:[['auto','Match device'],['light','Light'],['dark','Dark']]},
+  {k:'size', label:'Text size', opts:[['s','Small'],['m','Normal'],['l','Large'],['xl','Extra large']]},
+  {k:'hooks', label:'Memory hooks', help:'Hide them to test whether you know the term without the trick.', opts:[[true,'Show'],[false,'Hide']]},
+  {g:'Flashcards'},
+  {k:'fcPool', label:'Which cards', help:'Trouble terms are cards you\'ve missed in Learn lessons and haven\'t fixed yet.', opts:[['unknown','Not known yet'],['all','All cards'],['weak','Trouble terms']]},
+  {k:'fcOrder', label:'Order', help:'In order follows the study guide, section by section.', opts:[['shuffle','Shuffled'],['section','In order']]},
+  {g:'Quiz'},
+  {k:'quizMix', label:'Question type', opts:[['mixed','Mixed'],['terms','Terms only'],['scen','Scenarios only']]},
+  {k:'quizDir', label:'Term questions ask', opts:[['mixed','Both ways'],['def','Definition → term'],['term','Term → definition']]},
+  {k:'quizFocus', label:'Focus', help:'"Not known first" pulls cards you haven\'t marked “got it” before the rest.', opts:[['unknown','Not known first'],['random','Random'],['weak','Trouble terms']]},
+  {k:'timer', label:'Timer per question', help:'Running out of time counts as a miss. Timers only apply to the Quiz tab, not Learn.', opts:[[0,'Off'],[15,'15s'],[30,'30s'],[60,'60s']]}
+];
+function renderSettings(){
+  let h='<div class="qbox">', open=false;
+  SETTINGS.forEach(s=>{
+    if(s.g){h+=(open?'</div>':'')+`<div class="set-group"><h2>${esc(s.g)}</h2>`;open=true;return}
+    h+=`<div class="set-row"><div class="label">${esc(s.label)}</div><div class="seg">${s.opts.map(([v,l])=>`<button class="btn small" data-set="${s.k}" data-val="${esc(JSON.stringify(v))}" aria-pressed="${S.set[s.k]===v}">${esc(l)}</button>`).join('')}</div>${s.help?`<p>${esc(s.help)}</p>`:''}</div>`;
+  });
+  const known=CARDS.filter(c=>S.known[c.id]).length, weak=CARDS.filter(c=>S.miss[c.id]).length;
+  h+=`</div><div class="set-group"><h2>Your progress</h2>
+    <p class="deck-sub" style="margin:0">${known} terms marked “got it,” ${S.done.length} lessons done, ${weak} trouble terms. Progress is saved in this browser only. Back it up before clearing your browser data or switching devices.</p>
+    <div class="toggle"><button class="btn" data-act="export">Download backup</button><button class="btn" data-act="import">Restore from backup</button><input type="file" id="importFile" accept=".json,application/json" hidden></div>
+    <p id="dataNote" class="deck-sub" style="margin:0" aria-live="polite"></p>
+    <div class="toggle"><button class="btn small" data-act="defaults">Reset settings to default</button></div>
+    <p class="deck-sub" style="margin:0;font-size:.88rem">Resetting settings never changes your progress. To erase progress, use “Reset progress” at the top.</p></div></div>`;
+  $('#view').innerHTML=h;
+}
+function exportProgress(){
+  const data={};
+  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith('h10-')) data[k]=localStorage.getItem(k);}
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'history-ch10',saved:new Date().toISOString(),data},null,1)],{type:'application/json'}));
+  a.download=`history-ch10-progress-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importProgress(file){
+  const note=$('#dataNote');
+  file.text().then(txt=>{
+    const j=JSON.parse(txt), d=j&&j.app==='history-ch10'&&j.data;
+    if(!d||typeof d!=='object'||!Object.keys(d).length||Object.entries(d).some(([k,v])=>!k.startsWith('h10-')||typeof v!=='string')) throw 0;
+    if(!confirm('Restore this backup? It replaces the progress saved in this browser.')) return;
+    Object.entries(d).forEach(([k,v])=>localStorage.setItem(k,v));
+    location.reload();
+  }).catch(()=>{note.textContent='That file isn\'t a backup from this study kit. Nothing was changed.'});
+}
+
+/* ---------- Wiring ---------- */
+function render(){renderTabs();renderChips();renderMeter();$('#chips').hidden=S.tab==='settings'||(S.tab==='quiz'&&!!(S.quiz&&S.quiz.test)); if(S.tab==='learn')renderLearn(); else if(S.tab==='guide')renderGuide(); else if(S.tab==='cards')renderCards(); else if(S.tab==='settings')renderSettings(); else renderQuiz();}
+document.addEventListener('change',e=>{if(e.target.id==='importFile'&&e.target.files[0]) importProgress(e.target.files[0]); else if(['tmc','ttf','tscen'].includes(e.target.id)) syncTestInputs();});
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button'); if(!t) return;
+  if(t.dataset.tab){S.tab=t.dataset.tab;store.set('h10-tab2',S.tab);render();window.scrollTo({top:0});return}
+  if(t.dataset.goto){S.tab=t.dataset.goto;store.set('h10-tab2',S.tab);if(S.tab==='cards')S.fc=null;if(S.tab==='quiz')S.quiz=null;render();return}
+  if(t.dataset.scopeLearn){startScopeLearn(t.dataset.scopeLearn);return}
+  if(t.dataset.scopeQuiz){setQuizScope(t.dataset.scopeQuiz);return}
+  if(t.dataset.lesson!==undefined){startLesson(+t.dataset.lesson);return}
+  if(t.dataset.lopt!==undefined){learnPick(+t.dataset.lopt);return}
+  if(t.dataset.deck){S.deck=t.dataset.deck;store.set('h10-deck',S.deck);S.fc=null;S.quiz=null;
+    if(S.tab==='learn'&&S.deck!=='all'){const ls=DECK_VIEW.filter(d=>deckIn(d.id)&&(!d.opt||S.deck===d.id)).flatMap(d=>LESSONS.map((l,i)=>i).filter(i=>LESSONS[i].d===d.id&&!LESSONS[i].skip));startLesson(ls.find(i=>!S.done.includes(i))??ls[0]);renderChips();return}
+    render();return}
+  if(t.dataset.act&&t.dataset.act.startsWith('l-')){
+    const a=t.dataset.act;
+    if(a==='l-map'){S.showMap=!S.showMap;renderLearn()}
+    else if(a==='l-quiz'){beginLessonQuiz();window.scrollTo({top:0})}
+    else if(a==='l-next'){nextLearnQ()}
+    else if(a==='l-nextlesson'){startLesson(S.li+1)}
+    else if(a==='l-redo'){startLesson(S.li)}
+    else if(a==='l-scopequiz'){S.tab='quiz';store.set('h10-tab2','quiz');setQuizScope(S.deck);render();startQuiz(30);window.scrollTo({top:0})}
+    else if(a==='l-scopeexam'){const sc=S.deck;S.tab='quiz';store.set('h10-tab2','quiz');setQuizScope(sc);render();startTest(examCfg(30));window.scrollTo({top:0})}
+    else if(a==='l-final'){S.deck='all';store.set('h10-deck','all');S.tab='quiz';store.set('h10-tab2','quiz');render();startQuiz(40)}
+    return;
+  }
+  if(t.dataset.tdeck||t.dataset.tset||(t.dataset.act||'').startsWith('t-')){
+    if($('#tmc')) syncTestInputs();
+    const T=S.test, a=t.dataset.act;
+    if(t.dataset.tdeck){const id=t.dataset.tdeck; T.decks=T.decks.includes(id)?T.decks.filter(x=>x!==id):DECKS.map(d=>d.id).filter(x=>x===id||T.decks.includes(x))}
+    else if(t.dataset.tset) T[t.dataset.tset]=JSON.parse(t.dataset.val);
+    else if(a==='t-core') T.decks=DECKS.filter(d=>!d.opt).map(d=>d.id);
+    else if(a==='t-unit') T.decks=DECKS.filter(d=>d.unit===t.dataset.unit&&!d.opt).map(d=>d.id);
+    else if(a==='t-every') T.decks=DECKS.map(d=>d.id);
+    else if(a==='t-none') T.decks=[];
+    else if(a==='t-start'){startTest();window.scrollTo({top:0});return}
+    else if(a==='t-again'){startTest(S.quiz&&S.quiz.cfg);window.scrollTo({top:0});return}
+    else if(a==='t-next'){testNav(1);return}
+    else if(a==='t-back'){testNav(-1);return}
+    else if(a==='t-finish'){finishTest();return}
+    saveTest(); S.quizNote=''; renderQuiz(); return;
+  }
+  if(t.dataset.set){S.set[t.dataset.set]=JSON.parse(t.dataset.val);saveSet();applySet();S.fc=null;S.quiz=null;S.quizNote='';render();return}
+  if(t.dataset.know){const id=t.dataset.know;setKnown(id,!S.known[id]);t.setAttribute('aria-pressed',!!S.known[id]);t.textContent=S.known[id]?'✓ Got it':'Got it?';return}
+  if(t.dataset.quiz){startQuiz(+t.dataset.quiz);return}
+  if(t.dataset.opt!==undefined){pick(+t.dataset.opt);return}
+  const a=t.dataset.act;
+  if(a==='flip'){S.fc.flipped=!S.fc.flipped;renderCards()}
+  else if(a==='got')fcAnswer(true);
+  else if(a==='learning')fcAnswer(false);
+  else if(a==='shuffle'||a==='again'){S.fc=null;renderCards()}
+  else if(a==='front'){S.fcFront=S.fcFront==='term'?'def':'term';store.set('h10-front',S.fcFront);S.fc.flipped=false;renderCards()}
+  else if(a==='only'||a==='pool-all'){S.set.fcPool=a==='pool-all'?'all':POOL_NEXT[S.set.fcPool];saveSet();S.fc=null;renderCards()}
+  else if(a==='next'){S.quiz.i++;S.quiz.picked=null;renderQuiz();window.scrollTo({top:0})}
+  else if(a==='retry'){startQuiz(0,S.retryIds)}
+  else if(a==='newquiz'){S.quiz=null;renderQuiz()}
+  else if(a==='exam'){startTest(examCfg(+t.dataset.n));window.scrollTo({top:0})}
+  else if(a==='customquiz'){const n=Math.max(1,Math.min(200,parseInt($('#qcount').value,10)||15));store.set('h10-qcount',n);startQuiz(n)}
+  else if(a==='export')exportProgress();
+  else if(a==='import')$('#importFile').click();
+  else if(a==='defaults'){S.set=Object.assign({},DEF_SET);saveSet();applySet();S.fc=null;S.quiz=null;render()}
+});
+$('#reset').addEventListener('click',e=>{
+  const b=e.currentTarget;
+  if(b.dataset.confirm){S.known={};store.set('h10-known',{});S.fc=null;S.done=[];S.miss={};S.li=0;S.L=null;store.set('h10-done',[]);store.set('h10-miss',{});store.set('h10-li',0);b.textContent='Reset progress';delete b.dataset.confirm;render();}
+  else{b.dataset.confirm='1';b.textContent='Tap again to confirm';setTimeout(()=>{if(b.dataset.confirm){delete b.dataset.confirm;b.textContent='Reset progress'}},3000)}
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea')) return;
+  if(S.tab==='learn'&&S.L){
+    const L=S.L;
+    if(L.phase==='quiz'){
+      const m={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3}[e.key.toLowerCase()];
+      if(m!==undefined&&L.picked===null)learnPick(m);
+      else if(e.key==='Enter'&&L.picked!==null){e.preventDefault();nextLearnQ()}
+    }
+    return;
+  }
+  if(S.tab==='cards'&&S.fc&&S.fc.q.length){
+    if(e.code==='Space'){e.preventDefault();S.fc.flipped=!S.fc.flipped;renderCards()}
+    else if(e.key==='1')fcAnswer(false); else if(e.key==='2')fcAnswer(true);
+  } else if(S.tab==='quiz'&&S.quiz&&S.quiz.i<S.quiz.qs.length){
+    const m={a:0,b:1,c:2,d:3,e:4,'1':0,'2':1,'3':2,'4':3,'5':4}[e.key.toLowerCase()];
+    if(S.quiz.atEnd){
+      if(m!==undefined)pick(m);
+      else if(e.key==='Enter'){e.preventDefault();testNav(1)}
+      else if(e.key==='ArrowLeft')testNav(-1);
+    }
+    else if(m!==undefined&&S.quiz.picked===null)pick(m);
+    else if(e.key==='Enter'&&S.quiz.picked!==null){S.quiz.i++;S.quiz.picked=null;renderQuiz()}
+  }
+});
+render();
+</script>
+
+</body></html>

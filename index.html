@@ -913,7 +913,7 @@ function testNav(step){
 }
 function finishTest(){
   const Q=S.quiz, blank=Q.n-Q.answers.filter(a=>a!==undefined).length;
-  if(blank&&!confirm(`You left ${blank} question${blank>1?'s':''} blank. Finish and grade anyway?`)) return;
+  if(blank&&!Q.confirmBlank){Q.confirmBlank=true;document.querySelectorAll('[data-act=t-finish]').forEach(b=>b.textContent=`${blank} blank: tap again to grade`);setTimeout(()=>{Q.confirmBlank=false},5000);return;}
   gradeTest(); window.scrollTo({top:0});
 }
 
@@ -1100,7 +1100,6 @@ function importProgress(file){
   file.text().then(txt=>{
     const j=JSON.parse(txt), d=j&&j.app==='history-ch10'&&j.data;
     if(!d||typeof d!=='object'||!Object.keys(d).length||Object.entries(d).some(([k,v])=>!k.startsWith('h10-')||typeof v!=='string')) throw 0;
-    if(!confirm('Restore this backup? It replaces the progress saved in this browser.')) return;
     Object.entries(d).forEach(([k,v])=>localStorage.setItem(k,v));
     location.reload();
   }).catch(()=>{note.textContent='That file isn\'t a backup from this study kit. Nothing was changed.'});
